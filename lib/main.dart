@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fynder_trial/screens/chat_screen.dart';
 import 'package:fynder_trial/screens/news_section.dart';
 import 'package:fynder_trial/screens/settings_screen.dart';
+import 'package:fynder_trial/screens/sign_up.dart';
 import 'package:fynder_trial/screens/swipe_screen.dart';
 
 void main() {
@@ -16,12 +17,13 @@ class Fynder extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.lightBlue),
       routes: {
+        '/Sign_up': (context) => MyApp(),
         '/': (context) => SwipeScreen(),
         '/Chat': (context) => ChatScreen(),
         '/NewsSection': (context) => NewsScreen(),
         '/Settings': (context) => SettingsScreen(),
       },
-      initialRoute: '/',
+      initialRoute: '/Sign_up',
     );
   }
 }
