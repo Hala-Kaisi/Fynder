@@ -16,14 +16,15 @@ class Fynder extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.lightBlue),
+      initialRoute: '/',
       routes: {
-        '/Sign_up': (context) => MyApp(),
-        '/': (context) => SwipeScreen(),
+        '/': (context) => MyApp(),
+        '/Sign_Up': (context) => SignUpPage(),
+        '/HomeScreen': (context) => SwipeScreen(),
         '/Chat': (context) => ChatScreen(),
         '/NewsSection': (context) => NewsScreen(),
         '/Settings': (context) => SettingsScreen(),
       },
-      initialRoute: '/Sign_up',
     );
   }
 }
