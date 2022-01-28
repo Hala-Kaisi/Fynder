@@ -37,15 +37,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         child: ListView(
           children: <Widget>[
             Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  'TutorialKart',
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30),
-                )),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(10),
+              child: Image.asset('assets/FynderApplicationLogo.png',
+                  fit: BoxFit.cover),
+            ),
             Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
