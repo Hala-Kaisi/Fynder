@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fynder_trial/screens/chat_screen.dart';
+import 'package:fynder_trial/screens/home_page.dart';
 import 'package:fynder_trial/screens/news_section.dart';
 import 'package:fynder_trial/screens/settings_screen.dart';
 import 'package:fynder_trial/screens/sign_up.dart';

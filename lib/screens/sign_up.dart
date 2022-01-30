@@ -9,7 +9,7 @@ void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'Sample App';
+  static const String _title = 'Welcome';
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +43,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10),
+    return Scaffold(
+        //padding: const EdgeInsets.all(10),
+      body: Center(
         child: ListView(
           children: <Widget>[
             Container(
@@ -115,8 +116,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage() ));
+              },
+              child: const Text(
+                'Welcome',
+              ),
+            ),
           ],
-        ));
+        )));
   }
 }
 
@@ -159,7 +168,7 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Second Screen'),
+        title: const Text('Sign Up'),
       ),
       body: Center(
         child: ElevatedButton(
