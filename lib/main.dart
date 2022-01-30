@@ -19,7 +19,8 @@ class Fynder extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.lightBlue),
       initialRoute: '/',
       routes: {
-        '/': (context) => MyApp(),
+        '/': (context) => HomePage(),
+        '/Login': (context) => MyApp(),
         //This code proves to be redundant since the changing of the routes is
         //done by sign_up.dart file
 
