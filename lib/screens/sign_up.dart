@@ -4,6 +4,8 @@ import 'package:fynder_trial/screens/news_section.dart';
 import 'package:fynder_trial/screens/settings_screen.dart';
 import 'package:fynder_trial/screens/swipe_screen.dart';
 
+import 'information_page.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
       title: _title,
       routes: {
         '/Sign_Up': (context) => SignUpPage(),
+        '/info_page': (context) => inputinfoPage(),
         '/Home_Screen': (context) => SwipeScreen(),
         '/Chat': (context) => ChatScreen(),
         '/NewsSection': (context) => NewsScreen(),
@@ -43,80 +46,82 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: Image.asset('assets/FynderApplicationLogo.png',
-                  fit: BoxFit.cover),
-            ),
-            Container(
+    return Scaffold(
+      body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListView(
+            children: <Widget>[
+              Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
-                child: const Text(
-                  'Sign in',
-                  style: TextStyle(fontSize: 20),
-                )),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'User Name',
-                ),
+                child: Image.asset('assets/FynderApplicationLogo.png',
+                    fit: BoxFit.cover),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: TextField(
-                obscureText: true,
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                //forgot password screen
-              },
-              child: const Text(
-                'Forgot Password',
-              ),
-            ),
-            Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: ElevatedButton(
-                  child: const Text('Login'),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/Home_Screen');
-                    print(nameController.text);
-                    print(passwordController.text);
-                  },
-                )),
-            Row(
-              children: <Widget>[
-                const Text('Does not have account?'),
-                TextButton(
+              Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(10),
                   child: const Text(
-                    'Sign Up',
+                    'Sign in',
                     style: TextStyle(fontSize: 20),
+                  )),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'User Name',
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/Sign_Up'); //signup screen
-                  },
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
-          ],
-        ));
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                child: TextField(
+                  obscureText: true,
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  //forgot password screen
+                },
+                child: const Text(
+                  'Forgot Password',
+                ),
+              ),
+              Container(
+                  height: 50,
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: ElevatedButton(
+                    child: const Text('Login'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/Home_Screen');
+                      print(nameController.text);
+                      print(passwordController.text);
+                    },
+                  )),
+              Row(
+                children: <Widget>[
+                  const Text('Does not have account?'),
+                  TextButton(
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/Sign_Up'); //signup screen
+                    },
+                  )
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+            ],
+          )),
+    );
   }
 }
 
@@ -127,6 +132,9 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/info_page': (context) => inputinfoPage(),
+      },
       title: _title,
       home: Scaffold(
         appBar: AppBar(
@@ -144,8 +152,10 @@ class SignUpPage extends StatelessWidget {
               //chosen between Start-Up or Investor but for now it just takes
               //you back to the login screen
               ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Go back!')),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/info_page');
+                  },
+                  child: const Text('Continue')),
             ],
           ),
           alignment: Alignment.topCenter,
@@ -188,18 +198,20 @@ class _SignUpPageStatefulWidgetState extends State<SignUpPageStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     String dropdownValue = 'Start-Up';
-    return DropdownButton<String>(
+    String changedValue = '';
+    return DropdownButtonFormField<String>(
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),
       elevation: 16,
       style: const TextStyle(color: Colors.blue),
-      underline: Container(
+      /*underline: Container(
         height: 2,
         color: Colors.blue,
-      ),
+      ),*/
       onChanged: (String? newValue) {
+        changedValue = newValue!;
         setState(() {
-          dropdownValue = newValue!;
+          dropdownValue = changedValue;
         });
       },
       items: <String>['Start-Up', 'Investor']

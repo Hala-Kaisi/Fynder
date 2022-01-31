@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fynder_trial/screens/chat_screen.dart';
 import 'package:fynder_trial/screens/home_page.dart';
+import 'package:fynder_trial/screens/information_page.dart';
 import 'package:fynder_trial/screens/news_section.dart';
 import 'package:fynder_trial/screens/settings_screen.dart';
 import 'package:fynder_trial/screens/sign_up.dart';
@@ -19,8 +20,9 @@ class Fynder extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.lightBlue),
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(),
-        '/Login': (context) => MyApp(),
+        '/': (context) => const HomePage(),
+        '/Login': (context) => const MyApp(),
+        '/info_page': (context) => const inputinfoPage(),
         //This code proves to be redundant since the changing of the routes is
         //done by sign_up.dart file
 
