@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
       title: _title,
       routes: {
         '/Sign_Up': (context) => SignUpPage(),
-        '/info_page': (context) => inputinfoPage(),
         '/Home_Screen': (context) => SwipeScreen(),
         '/Chat': (context) => ChatScreen(),
         '/NewsSection': (context) => NewsScreen(),
