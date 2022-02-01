@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fynder_trial">
+    package="com.example.fynder">
    <application
-        android:label="fynder_trial"
+        android:label="fynder"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

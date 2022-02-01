@@ -7,22 +7,34 @@ class MenuBottom extends StatelessWidget {
   const MenuBottom({Key? key}) : super(key: key);
 
   @override
+  _MenuBottomState createState() => _MenuBottomState();
+}
+
+class _MenuBottomState extends State<MenuBottom> {
+  static int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      switch (index) {
+        case 0:
+          Navigator.pushNamed(context, '/SwipeScreen');
+          break;
+        case 1:
+          Navigator.pushNamed(context, '/Chat');
+          break;
+        case 2:
+          Navigator.pushNamed(context, '/NewsSection');
+          break;
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      onTap: (int index) {
-        switch (index) {
-          case 0:
-            Navigator.pushNamed(context, '/Home_Screen');
-            break;
-          case 1:
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => ChatScreen()));
-            break;
-          case 2:
-            Navigator.pushNamed(context, '/NewsSection');
-            break;
-        }
-      },
+      selectedItemColor: Colors.blue,
+      currentIndex: _selectedIndex,
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.swipe),
@@ -37,6 +49,9 @@ class MenuBottom extends StatelessWidget {
           label: 'NewsSection',
         ),
       ],
+      onTap: (value) {
+        _onItemTapped(value);
+      },
     );
   }
 }

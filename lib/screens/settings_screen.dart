@@ -1,7 +1,8 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
-import 'package:fynder_trial/shared/actions_menu.dart';
-import 'package:fynder_trial/shared/menu_bottom.dart';
-import 'package:fynder_trial/shared/menu_drawer.dart';
+import 'package:fynder/shared/actions_menu.dart';
+import 'package:fynder/shared/menu_bottom.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -15,7 +16,6 @@ class SettingsScreen extends StatelessWidget {
         actions: <Widget>[ActionsMenu()],
       ),
       bottomNavigationBar: MenuBottom(),
-      drawer: MenuDrawer(),
       body: Center(
         child: Text("Settings Screen"),
       ),

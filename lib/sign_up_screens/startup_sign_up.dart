@@ -5,14 +5,14 @@ import 'package:fynder/shared/actions_menu.dart';
 import 'package:fynder/shared/menu_bottom.dart';
 import 'package:fynder/shared/menu_drawer.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class StartupSingUp extends StatefulWidget {
+  const StartupSingUp({Key? key}) : super(key: key);
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _StartupSingUpState createState() => _StartupSingUpState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _StartupSingUpState extends State<StartupSingUp> {
   final TextEditingController txtIdeaSummary = TextEditingController();
   final TextEditingController txtPersonalWebsiteLink = TextEditingController();
   final TextEditingController txtVideoLink = TextEditingController();
@@ -31,15 +31,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Image.asset('assets/FynderApplicationLogo.png',
-              fit: BoxFit.cover),
-          actions: <Widget>[ActionsMenu()]),
-      bottomNavigationBar: MenuBottom(),
-      drawer: MenuDrawer(),
+        title:
+            Image.asset('assets/FynderApplicationLogo.png', fit: BoxFit.cover),
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Text(
+                  'Welcome To Fynder',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: TextField(
@@ -85,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               ElevatedButton(
                 child: Text(
-                  'Save',
+                  'Save and Proceed',
                   style: TextStyle(
                     fontSize: fontSize,
                   ),

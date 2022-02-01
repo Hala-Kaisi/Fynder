@@ -1,6 +1,6 @@
 {
-    "name": "fynder_trial",
-    "short_name": "fynder_trial",
+    "name": "fynder",
+    "short_name": "fynder",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

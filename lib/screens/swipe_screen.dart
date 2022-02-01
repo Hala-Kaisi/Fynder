@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fynder_trial/shared/actions_menu.dart';
-import 'package:fynder_trial/shared/menu_bottom.dart';
-import 'package:fynder_trial/shared/menu_drawer.dart';
+import 'package:fynder/shared/actions_menu.dart';
+import 'package:fynder/shared/menu_drawer.dart';
+import 'package:fynder/shared/menu_bottom.dart';
 
 class SwipeScreen extends StatelessWidget {
   const SwipeScreen({Key? key}) : super(key: key);
