@@ -28,14 +28,6 @@ class Fynder extends StatelessWidget {
         '/Chat': (context) => ChatScreen(),
         '/NewsSection': (context) => NewsScreen(),
         '/Settings': (context) => SettingsScreen(),
-        //This code proves to be redundant since the changing of the routes is
-        //done by sign_up.dart file
-
-        //'/Sign_Up': (context) => SignUpPage(),
-        //'/HomeScreen': (context) => SwipeScreen(),
-        //'/Chat': (context) => ChatScreen(),
-        //'/NewsSection': (context) => NewsScreen(),
-        //'/Settings': (context) => SettingsScreen(),
       },
     );
   }
