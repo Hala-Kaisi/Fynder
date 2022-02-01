@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fynder_trial/screens/chat_screen.dart';
+import 'package:fynder_trial/screens/home_page.dart';
 import 'package:fynder_trial/screens/news_section.dart';
 import 'package:fynder_trial/screens/settings_screen.dart';
 import 'package:fynder_trial/screens/swipe_screen.dart';
-
 import 'information_page.dart';
-
-void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -17,13 +15,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      routes: {
-        '/Sign_Up': (context) => SignUpPage(),
-        '/Home_Screen': (context) => SwipeScreen(),
-        '/Chat': (context) => ChatScreen(),
-        '/NewsSection': (context) => NewsScreen(),
-        '/Settings': (context) => SettingsScreen(),
-      },
       home: Scaffold(
         appBar: AppBar(title: const Text(_title)),
         body: const MyStatefulWidget(),
@@ -98,7 +89,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   child: ElevatedButton(
                     child: const Text('Login'),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/Home_Screen');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SwipeScreen()));
                       print(nameController.text);
                       print(passwordController.text);
                     },
