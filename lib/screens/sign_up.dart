@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fynder/screens/choose_account_type.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'information_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'Sample App';
+  static const String _title = 'Welcome!';
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +107,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  SignUpPage())); //signup screen
+                                  ChooseAccount())); //signup screen
                     },
                   )
                 ],

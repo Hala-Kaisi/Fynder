@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fynder/screens/choose_account_type.dart';
 import 'package:fynder/screens/sign_up.dart';
 
 class HomePage extends StatelessWidget {
@@ -76,7 +77,7 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpPage()));
+                              builder: (context) => ChooseAccount()));
                     },
                     color: const Color(0xff0095FF),
                     shape: RoundedRectangleBorder(
