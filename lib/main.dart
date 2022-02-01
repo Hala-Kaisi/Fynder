@@ -23,6 +23,11 @@ class Fynder extends StatelessWidget {
         '/': (context) => const HomePage(),
         '/Login': (context) => const MyApp(),
         '/info_page': (context) => const inputinfoPage(),
+        '/Sign_Up': (context) => SignUpPage(),
+        '/Home_Screen': (context) => SwipeScreen(),
+        '/Chat': (context) => ChatScreen(),
+        '/NewsSection': (context) => NewsScreen(),
+        '/Settings': (context) => SettingsScreen(),
         //This code proves to be redundant since the changing of the routes is
         //done by sign_up.dart file
 
