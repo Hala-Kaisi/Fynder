@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:fynder_trial/screens/chat_screen.dart';
+import 'package:fynder/screens/chat_screen.dart';
+import 'package:fynder/screens/news_section.dart';
 
-class MenuBottom extends StatelessWidget {
+class MenuBottom extends StatefulWidget {
   const MenuBottom({Key? key}) : super(key: key);
 
   @override
@@ -21,10 +22,12 @@ class _MenuBottomState extends State<MenuBottom> {
           Navigator.pushNamed(context, '/SwipeScreen');
           break;
         case 1:
-          Navigator.pushNamed(context, '/Chat');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const ChatScreen()));
           break;
         case 2:
-          Navigator.pushNamed(context, '/NewsSection');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const NewsScreen()));
           break;
       }
     });

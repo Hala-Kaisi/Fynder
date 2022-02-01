@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fynder_trial/screens/chat_screen.dart';
-import 'package:fynder_trial/screens/home_page.dart';
-import 'package:fynder_trial/screens/information_page.dart';
-import 'package:fynder_trial/screens/news_section.dart';
-import 'package:fynder_trial/screens/settings_screen.dart';
-import 'package:fynder_trial/screens/sign_up.dart';
-import 'package:fynder_trial/screens/swipe_screen.dart';
+import 'package:fynder/screens/chat_screen.dart';
+import 'package:fynder/screens/home_page.dart';
+import 'package:fynder/screens/information_page.dart';
+import 'package:fynder/screens/news_section.dart';
+import 'package:fynder/screens/settings_screen.dart';
+import 'package:fynder/screens/sign_up.dart';
+import 'package:fynder/screens/swipe_screen.dart';
 
 void main() {
   runApp(Fynder());

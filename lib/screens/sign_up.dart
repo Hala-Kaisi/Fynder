@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fynder_trial/screens/chat_screen.dart';
-import 'package:fynder_trial/screens/home_page.dart';
-import 'package:fynder_trial/screens/news_section.dart';
-import 'package:fynder_trial/screens/settings_screen.dart';
-import 'package:fynder_trial/screens/swipe_screen.dart';
+import 'package:fynder/screens/swipe_screen.dart';
 import 'information_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -106,7 +102,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       style: TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/Sign_Up'); //signup screen
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SignUpPage())); //signup screen
                     },
                   )
                 ],
@@ -141,12 +141,12 @@ class SignUpPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               const SignUpPageStatefulWidget(),
-              //This button will act as a "continue" button when the user has
-              //chosen between Start-Up or Investor but for now it just takes
-              //you back to the login screen
               ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/info_page');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const inputinfoPage()));
                   },
                   child: const Text('Continue')),
             ],
