@@ -56,7 +56,8 @@ class HomePage extends StatelessWidget {
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () {
-                      Navigator.pushNamed(context, '/Login');
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => LogIn()));
                     },
                     // defining the shape
                     shape: RoundedRectangleBorder(

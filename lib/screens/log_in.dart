@@ -98,8 +98,8 @@ class _LogInState extends State<LogIn> {
                       style: TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context,'/choose_account'); //signup screen
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => ChooseAccount()));
                     },
                   )
                 ],

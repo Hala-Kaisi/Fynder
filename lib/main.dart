@@ -22,12 +22,9 @@ class Fynder extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/Login': (context) => LogIn(),
-        // '/choose_account':(context) => ChooseAccount(),
         '/Swipe': (context) => SwipeScreen(),
         '/Chat': (context) => ChatScreen(),
         '/NewsSection': (context) => NewsScreen(),
-        '/Settings': (context) => SettingsScreen(),
       },
     );
   }
