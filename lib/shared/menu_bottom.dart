@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:fynder/screens/chat_screen.dart';
 import 'package:fynder/screens/news_section.dart';
+import 'package:fynder/screens/swipe_screen.dart';
 
 class MenuBottom extends StatefulWidget {
   const MenuBottom({Key? key}) : super(key: key);
@@ -19,7 +20,11 @@ class _MenuBottomState extends State<MenuBottom> {
       _selectedIndex = index;
       switch (index) {
         case 0:
-          Navigator.pushNamed(context, '/SwipeScreen');
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SwipeScreen(),
+              ));
           break;
         case 1:
           Navigator.push(context,
