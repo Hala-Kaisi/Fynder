@@ -2,9 +2,24 @@
 
 import 'package:flutter/material.dart';
 
-
-class InvestorSignUp extends StatelessWidget {
+class InvestorSignUp extends StatefulWidget {
   const InvestorSignUp({Key? key}) : super(key: key);
+
+  @override
+  _InvestorSignUpState createState() => _InvestorSignUpState();
+}
+
+class _InvestorSignUpState extends State<InvestorSignUp> {
+  final TextEditingController txtDescription = TextEditingController();
+  final TextEditingController txtPersonalWebsiteLink = TextEditingController();
+  final TextEditingController txtVideoLink = TextEditingController();
+
+  final double fontSize = 18;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
