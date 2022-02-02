@@ -11,17 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        inputDecorationTheme: MyTheme().theme(),
-      )
-      ,
-      title: _title,
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(title: const Text(_title)),
         body: const MyStatefulWidget(),
-      ),
     );
   }
 }
