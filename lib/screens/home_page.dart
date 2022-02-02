@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fynder/screens/choose_account_type.dart';
+import 'package:fynder/screens/login_page.dart';
 import 'package:fynder/screens/sign_up.dart';
 
 class HomePage extends StatelessWidget {

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:fynder/sign_up_screens/investor_sign_up.dart';
 import 'package:fynder/sign_up_screens/startup_sign_up.dart';
+import 'package:fynder/textdesign/my_theme.dart';
 
 class ChooseAccount extends StatefulWidget {
   const ChooseAccount({Key? key}) : super(key: key);
@@ -29,64 +30,74 @@ class _ChooseAccountState extends State<ChooseAccount> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Select Account"),
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        inputDecorationTheme: MyTheme().theme(),
       ),
-      body: Center(
-        // allows scrolling when does not fit in the screen
-        child: Stack(
-          children: [
-            Align(
-              child: ToggleButtons(
-                  borderRadius: BorderRadius.circular(50),
-                  children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 45,vertical: 20),
-                  child: Text("Startup", style: TextStyle(fontSize: fontSize)),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 45,vertical: 20),
-                  child: Text("Investor", style: TextStyle(fontSize: fontSize)),
-                ),
-              ], isSelected: isSelected, onPressed: toggleMeasure),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: const EdgeInsets.all(50),
-                child: MaterialButton(
-                  minWidth: 370,
-                  height: 60,
-                  color: const Color(0xff0095FF),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
-                  child: Text(
-                    'Proceed',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: fontSize,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Select Account"),
+        ),
+        body: Center(
+          // allows scrolling when does not fit in the screen
+          child: Stack(
+            children: [
+              Align(
+                child: ToggleButtons(
+                    //borderRadius: BorderRadius.circular(50),
+                    children: [
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 45, vertical: 20),
+                        child: Text("Startup",
+                            style: TextStyle(fontSize: fontSize)),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 45, vertical: 20),
+                        child: Text("Investor",
+                            style: TextStyle(fontSize: fontSize)),
+                      ),
+                    ], isSelected: isSelected, onPressed: toggleMeasure),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: const EdgeInsets.all(50),
+                  child: MaterialButton(
+                    minWidth: 370,
+                    height: 60,
+                    color: const Color(0xff0095FF),
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(50)),
+                    child: Text(
+                      'Proceed',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: fontSize,
+                      ),
                     ),
+                    onPressed: () {
+                      if (isStartup == true) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => startupSignUp));
+                      } else {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => investorSignUp));
+                      }
+                    },
                   ),
-                  onPressed: () {
-                    if (isStartup == true) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => startupSignUp));
-                    } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => investorSignUp));
-                    }
-                  },
                 ),
               ),
-            ),
-            Text(
-              '',
-              style: TextStyle(
-                fontSize: fontSize,
-              ),
-            )
-          ],
+              Text(
+                '',
+                style: TextStyle(
+                  fontSize: fontSize,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
