@@ -91,14 +91,22 @@ class _StartupSingUpState extends State<StartupSingUp> {
                   decoration: InputDecoration(hintText: 'Investment Type'),
                 ),
               ),
-              ElevatedButton(
-                child: Text(
+              MaterialButton(
+                minWidth: 370,
+                height: 60,
+                onPressed: () {
+
+                },
+                color: const Color(0xff0095FF),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                child: const Text(
                   'Save and Proceed',
                   style: TextStyle(
-                    fontSize: fontSize,
-                  ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
                 ),
-                onPressed: () {},
               ),
             ],
           ),

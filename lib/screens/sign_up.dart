@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fynder/screens/choose_account_type.dart';
 import 'package:fynder/screens/swipe_screen.dart';
+import 'package:fynder/textdesign/my_theme.dart';
 import 'information_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,6 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        inputDecorationTheme: MyTheme().theme(),
+      )
+      ,
       title: _title,
       home: Scaffold(
         appBar: AppBar(title: const Text(_title)),
@@ -58,6 +64,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'User Name',
+                    helperText: '',
+                    hintText: 'User Name',
                   ),
                 ),
               ),
@@ -69,6 +77,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
+                    helperText: '',
+                    hintText: 'Password',
                   ),
                 ),
               ),
@@ -81,10 +91,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 ),
               ),
               Container(
-                  height: 50,
+                  height: 60,
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: ElevatedButton(
-                    child: const Text('Login'),
+                  child: MaterialButton(
+                    color: const Color(0xff0095FF),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)),
+                    child: const Text('Login',
+                      style:TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),),
                     onPressed: () {
                       Navigator.push(
                           context,

@@ -38,13 +38,15 @@ class _ChooseAccountState extends State<ChooseAccount> {
         child: Stack(
           children: [
             Align(
-              child: ToggleButtons(children: [
+              child: ToggleButtons(
+                  borderRadius: BorderRadius.circular(50),
+                  children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 45,vertical: 20),
                   child: Text("Startup", style: TextStyle(fontSize: fontSize)),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 45,vertical: 20),
                   child: Text("Investor", style: TextStyle(fontSize: fontSize)),
                 ),
               ], isSelected: isSelected, onPressed: toggleMeasure),
@@ -52,11 +54,17 @@ class _ChooseAccountState extends State<ChooseAccount> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                margin: const EdgeInsets.all(5),
-                child: ElevatedButton(
+                margin: const EdgeInsets.all(50),
+                child: MaterialButton(
+                  minWidth: 370,
+                  height: 60,
+                  color: const Color(0xff0095FF),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
                   child: Text(
                     'Proceed',
                     style: TextStyle(
+                      color: Colors.white,
                       fontSize: fontSize,
                     ),
                   ),
