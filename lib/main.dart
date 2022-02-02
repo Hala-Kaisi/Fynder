@@ -26,7 +26,6 @@ class Fynder extends StatelessWidget {
         '/Login': (context) => LogIn(),
         '/info_page': (context) => inputinfoPage(),
         '/choose_account':(context) => ChooseAccount(),
-        //'/Sign_Up': (context) => SignUpPage(),
         '/Home_Screen': (context) => SwipeScreen(),
         '/Chat': (context) => ChatScreen(),
         '/NewsSection': (context) => NewsScreen(),
