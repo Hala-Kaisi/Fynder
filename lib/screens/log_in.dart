@@ -4,7 +4,7 @@ import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/textdesign/my_theme.dart';
 import 'information_page.dart';
 
-class MyApp extends StatelessWidget {
+/*class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   static const String _title = 'Welcome!';
@@ -13,25 +13,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text(_title)),
-        body: const MyStatefulWidget(),
+        body: const LogIn(),
     );
   }
-}
-
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+}*/
+class LogIn extends StatefulWidget {
+  const LogIn({Key? key}) : super(key: key);
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<LogIn> createState() => _LogInState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _LogInState extends State<LogIn> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Welcome')),
       body: Padding(
           padding: const EdgeInsets.all(10),
           child: ListView(
@@ -112,11 +112,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       style: TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ChooseAccount())); //signup screen
+                      Navigator.pushNamed(
+                          context,'/choose_account'); //signup screen
                     },
                   )
                 ],
@@ -128,7 +125,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 }
 
-class SignUpPage extends StatelessWidget {
+/*class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
   static const String _title = 'Flutter Code Sample';
 
@@ -168,7 +165,7 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
-/*@override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -187,7 +184,7 @@ class SignUpPage extends StatelessWidget {
       ),
     );
   }
-}*/
+}
 
 class SignUpPageStatefulWidget extends StatefulWidget {
   const SignUpPageStatefulWidget({Key? key}) : super(key: key);
@@ -226,4 +223,4 @@ class _SignUpPageStatefulWidgetState extends State<SignUpPageStatefulWidget> {
       }).toList(),
     );
   }
-}
+}*/

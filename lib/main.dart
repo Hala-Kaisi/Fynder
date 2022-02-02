@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fynder/screens/chat_screen.dart';
+import 'package:fynder/screens/choose_account_type.dart';
 import 'package:fynder/screens/home_page.dart';
 import 'package:fynder/screens/information_page.dart';
 import 'package:fynder/screens/news_section.dart';
 import 'package:fynder/screens/settings_screen.dart';
-import 'package:fynder/screens/sign_up.dart';
+import 'package:fynder/screens/log_in.dart';
 import 'package:fynder/screens/swipe_screen.dart';
+import 'package:fynder/textdesign/my_theme.dart';
 
 void main() {
   runApp(Fynder());
@@ -17,13 +19,14 @@ class Fynder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.lightBlue),
+      theme: ThemeData(primarySwatch: Colors.lightBlue, inputDecorationTheme: MyTheme().theme()),
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomePage(),
-        '/Login': (context) => const MyApp(),
-        '/info_page': (context) => const inputinfoPage(),
-        '/Sign_Up': (context) => SignUpPage(),
+        '/': (context) => HomePage(),
+        '/Login': (context) => LogIn(),
+        '/info_page': (context) => inputinfoPage(),
+        '/choose_account':(context) => ChooseAccount(),
+        //'/Sign_Up': (context) => SignUpPage(),
         '/Home_Screen': (context) => SwipeScreen(),
         '/Chat': (context) => ChatScreen(),
         '/NewsSection': (context) => NewsScreen(),

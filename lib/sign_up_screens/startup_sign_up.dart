@@ -30,12 +30,7 @@ class _StartupSingUpState extends State<StartupSingUp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        inputDecorationTheme: MyTheme().theme(),
-      ),
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Image.asset('assets/FynderApplicationLogo.png',
               fit: BoxFit.cover),
@@ -152,7 +147,6 @@ class _StartupSingUpState extends State<StartupSingUp> {
             ),
           ),
         ),
-      ),
     );
   }
 }

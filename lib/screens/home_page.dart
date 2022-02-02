@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fynder/screens/choose_account_type.dart';
-import 'package:fynder/screens/login_page.dart';
-import 'package:fynder/screens/sign_up.dart';
+import 'package:fynder/screens/log_in.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -75,10 +74,9 @@ class HomePage extends StatelessWidget {
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushNamed(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => ChooseAccount()));
+                          '/choose_account');
                     },
                     color: const Color(0xff0095FF),
                     shape: RoundedRectangleBorder(
