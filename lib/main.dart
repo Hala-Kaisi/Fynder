@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fynder/screens/chat_screen.dart';
 import 'package:fynder/screens/choose_account_type.dart';
 import 'package:fynder/screens/home_page.dart';
-import 'package:fynder/screens/information_page.dart';
 import 'package:fynder/screens/news_section.dart';
 import 'package:fynder/screens/settings_screen.dart';
 import 'package:fynder/screens/log_in.dart';
@@ -24,9 +23,8 @@ class Fynder extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/Login': (context) => LogIn(),
-        '/info_page': (context) => inputinfoPage(),
-        '/choose_account':(context) => ChooseAccount(),
-        '/Home_Screen': (context) => SwipeScreen(),
+        // '/choose_account':(context) => ChooseAccount(),
+        '/Swipe': (context) => SwipeScreen(),
         '/Chat': (context) => ChatScreen(),
         '/NewsSection': (context) => NewsScreen(),
         '/Settings': (context) => SettingsScreen(),

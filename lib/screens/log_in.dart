@@ -2,21 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fynder/screens/choose_account_type.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/textdesign/my_theme.dart';
-import 'information_page.dart';
 
-/*class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  static const String _title = 'Welcome!';
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: const Text(_title)),
-        body: const LogIn(),
-    );
-  }
-}*/
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
 

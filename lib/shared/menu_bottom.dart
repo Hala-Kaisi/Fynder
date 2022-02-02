@@ -20,19 +20,13 @@ class _MenuBottomState extends State<MenuBottom> {
       _selectedIndex = index;
       switch (index) {
         case 0:
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SwipeScreen(),
-              ));
+          Navigator.pushNamed(context, '/Swipe');
           break;
         case 1:
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ChatScreen()));
+          Navigator.pushNamed(context, '/Chat');
           break;
         case 2:
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const NewsScreen()));
+          Navigator.pushNamed(context, '/NewsSection');
           break;
       }
     });

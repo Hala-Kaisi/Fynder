@@ -84,12 +84,6 @@ class _ChooseAccountState extends State<ChooseAccount> {
                 ),
               ),
             ),
-            Text(
-              '',
-              style: TextStyle(
-                fontSize: fontSize,
-              ),
-            )
           ],
         ),
       ),

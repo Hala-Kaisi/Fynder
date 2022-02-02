@@ -74,9 +74,8 @@ class HomePage extends StatelessWidget {
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () {
-                      Navigator.pushNamed(
-                          context,
-                          '/choose_account');
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => ChooseAccount()));
                     },
                     color: const Color(0xff0095FF),
                     shape: RoundedRectangleBorder(
