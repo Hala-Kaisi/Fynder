@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:fynder/sign_up_screens/investor_sign_up.dart';
-import 'package:fynder/sign_up_screens/startup_sign_up.dart';
-import 'package:fynder/textdesign/my_theme.dart';
+import 'package:fynder/sign_up_screens/investor_email_sign_up.dart';
+import 'package:fynder/sign_up_screens/startup_email_sign_up.dart';
 
 class ChooseAccount extends StatefulWidget {
   const ChooseAccount({Key? key}) : super(key: key);
@@ -17,8 +16,8 @@ class _ChooseAccountState extends State<ChooseAccount> {
   bool isStartup = true;
   bool isInvestor = false;
 
-  StartupSingUp startupSignUp = StartupSingUp();
-  InvestorSignUp investorSignUp = InvestorSignUp();
+  StartupEmailSignUp startupSignUp = StartupEmailSignUp();
+  InvestorEmailSignUp investorSignUp = InvestorEmailSignUp();
 
   late List<bool> isSelected;
 
@@ -90,14 +89,19 @@ class _ChooseAccountState extends State<ChooseAccount> {
                   ),
                 ),
               ),
-              Text(
-                '',
-                style: TextStyle(
-                  fontSize: fontSize,
+                  onPressed: () {
+                    if (isStartup == true) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => startupSignUp));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => investorSignUp));
+                    }
+                  },
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );

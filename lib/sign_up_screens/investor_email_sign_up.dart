@@ -1,10 +1,25 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:fynder/sign_up_screens/investor_sign_up.dart';
 
+class InvestorEmailSignUp extends StatefulWidget {
+  const InvestorEmailSignUp({Key? key}) : super(key: key);
 
-class InvestorSignUp extends StatelessWidget {
-  const InvestorSignUp({Key? key}) : super(key: key);
+  @override
+  _InvestorEmailSignUpState createState() => _InvestorEmailSignUpState();
+}
+
+class _InvestorEmailSignUpState extends State<InvestorEmailSignUp> {
+  final TextEditingController txtEmail = TextEditingController();
+  final TextEditingController txtPassword = TextEditingController();
+
+  final double fontSize = 18;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,23 +45,15 @@ class InvestorSignUp extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: TextField(
-                  controller: txtDescription,
-                  decoration: InputDecoration(hintText: 'Short Description'),
+                  controller: txtEmail,
+                  decoration: InputDecoration(hintText: 'Email'),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: TextField(
-                  controller: txtPersonalWebsiteLink,
-                  decoration:
-                      InputDecoration(hintText: 'Personal Website Link'),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: TextField(
-                  controller: txtVideoLink,
-                  decoration: InputDecoration(hintText: 'Youtube Video Link'),
+                  controller: txtPassword,
+                  decoration: InputDecoration(hintText: 'Password'),
                 ),
               ),
               ElevatedButton(
@@ -56,7 +63,10 @@ class InvestorSignUp extends StatelessWidget {
                     fontSize: fontSize,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => InvestorSignUp()));
+                },
               ),
             ],
           ),
