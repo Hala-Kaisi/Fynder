@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:fynder/screens/profile_screen.dart';
-import 'package:fynder/screens/settings_screen.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({Key? key}) : super(key: key);

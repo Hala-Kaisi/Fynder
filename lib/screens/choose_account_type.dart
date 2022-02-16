@@ -60,11 +60,11 @@ class _ChooseAccountState extends State<ChooseAccount> {
               child: Container(
                 margin: const EdgeInsets.all(50),
                 child: MaterialButton(
-                  minWidth: 370,
+                  minWidth: double.infinity,
                   height: 60,
                   color: const Color(0xff0095FF),
-                  // shape: RoundedRectangleBorder(
-                  //   borderRadius: BorderRadius.circular(50)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
                   child: Text(
                     'Proceed',
                     style: TextStyle(

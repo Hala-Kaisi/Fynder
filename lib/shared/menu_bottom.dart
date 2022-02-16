@@ -1,9 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:fynder/screens/chat_screen.dart';
-import 'package:fynder/screens/news_section.dart';
-import 'package:fynder/screens/swipe_screen.dart';
 
 class MenuBottom extends StatefulWidget {
   const MenuBottom({Key? key}) : super(key: key);

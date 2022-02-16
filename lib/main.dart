@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fynder/screens/chat_screen.dart';
-import 'package:fynder/screens/choose_account_type.dart';
 import 'package:fynder/screens/home_page.dart';
 import 'package:fynder/screens/news_section.dart';
-import 'package:fynder/screens/settings_screen.dart';
-import 'package:fynder/screens/log_in.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/textdesign/my_theme.dart';
 

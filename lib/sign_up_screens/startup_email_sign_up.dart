@@ -35,7 +35,7 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
               Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Text(
-                  'Welcome To Fynder',
+                  'Welcome To Fynder - StartUp Account',
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.blue,
@@ -53,14 +53,19 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                 padding: const EdgeInsets.all(24.0),
                 child: TextField(
                   controller: txtPassword,
-                  decoration:
-                      InputDecoration(hintText: 'Password'),
+                  decoration: InputDecoration(hintText: 'Password'),
                 ),
               ),
-              ElevatedButton(
+              MaterialButton(
+                minWidth: 360,
+                height: 60,
+                color: const Color(0xff0095FF),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
                 child: Text(
                   'Save and Proceed',
                   style: TextStyle(
+                    color: Colors.white,
                     fontSize: fontSize,
                   ),
                 ),

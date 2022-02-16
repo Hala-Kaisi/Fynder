@@ -1,10 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:fynder/shared/actions_menu.dart';
-import 'package:fynder/shared/menu_bottom.dart';
-import 'package:fynder/shared/menu_drawer.dart';
-import 'package:fynder/textdesign/my_theme.dart';
 
 class StartupSingUp extends StatefulWidget {
   const StartupSingUp({Key? key}) : super(key: key);
@@ -42,7 +38,7 @@ class _StartupSingUpState extends State<StartupSingUp> {
                 Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Text(
-                    'Welcome To Fynder',
+                    'Please fill the form',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.blue,
@@ -129,7 +125,7 @@ class _StartupSingUpState extends State<StartupSingUp> {
                   ),
                 ),
                 MaterialButton(
-                  minWidth: 370,
+                  minWidth: 360,
                   height: 60,
                   onPressed: () {},
                   color: const Color(0xff0095FF),

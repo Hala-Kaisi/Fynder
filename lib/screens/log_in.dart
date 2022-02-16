@@ -75,18 +75,18 @@ class _LogInState extends State<LogIn> {
                     color: const Color(0xff0095FF),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
-                    child: const Text('Login',
-                      style:TextStyle(
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
-                      ),),
+                      ),
+                    ),
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => SwipeScreen()));
-                      print(nameController.text);
-                      print(passwordController.text);
                     },
                   )),
               Row(
@@ -110,103 +110,3 @@ class _LogInState extends State<LogIn> {
     );
   }
 }
-
-/*class SignUpPage extends StatelessWidget {
-  const SignUpPage({Key? key}) : super(key: key);
-  static const String _title = 'Flutter Code Sample';
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/info_page': (context) => inputinfoPage(),
-      },
-      title: _title,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(_title),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-        body: Align(
-          child: Column(
-            children: <Widget>[
-              const SignUpPageStatefulWidget(),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const inputinfoPage()));
-                  },
-                  child: const Text('Continue')),
-            ],
-          ),
-          alignment: Alignment.topCenter,
-        ),
-      ),
-    );
-  }
-}
-
-@override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Second Screen'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          // Within the SecondScreen widget
-          onPressed: () {
-            // Navigate back to the first screen by popping the current route
-            // off the stack.
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
-      ),
-    );
-  }
-}
-
-class SignUpPageStatefulWidget extends StatefulWidget {
-  const SignUpPageStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  _SignUpPageStatefulWidgetState createState() =>
-      _SignUpPageStatefulWidgetState();
-}
-
-class _SignUpPageStatefulWidgetState extends State<SignUpPageStatefulWidget> {
-  @override
-  Widget build(BuildContext context) {
-    String dropdownValue = 'Start-Up';
-    String changedValue = '';
-    return DropdownButtonFormField<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.blue),
-      /*underline: Container(
-        height: 2,
-        color: Colors.blue,
-      ),*/
-      onChanged: (String? newValue) {
-        changedValue = newValue!;
-        setState(() {
-          dropdownValue = changedValue;
-        });
-      },
-      items: <String>['Start-Up', 'Investor']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
-  }
-}*/
