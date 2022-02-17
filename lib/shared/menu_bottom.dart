@@ -1,15 +1,29 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fynder/screens/chat_screen.dart';
+import 'package:fynder/screens/news_section.dart';
+import 'package:fynder/screens/swipe_screen.dart';
 
 class MenuBottom extends StatefulWidget {
-  const MenuBottom({Key? key}) : super(key: key);
+  final User user;
+
+  const MenuBottom({required this.user});
 
   @override
   _MenuBottomState createState() => _MenuBottomState();
 }
 
 class _MenuBottomState extends State<MenuBottom> {
+  late User _currentUser;
+
+  @override
+  void initState() {
+    _currentUser = widget.user;
+    super.initState();
+  }
+
   static int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -17,13 +31,16 @@ class _MenuBottomState extends State<MenuBottom> {
       _selectedIndex = index;
       switch (index) {
         case 0:
-          Navigator.pushNamed(context, '/Swipe');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => SwipeScreen(user: _currentUser)));
           break;
         case 1:
-          Navigator.pushNamed(context, '/Chat');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => ChatScreen(user: _currentUser)));
           break;
         case 2:
-          Navigator.pushNamed(context, '/NewsSection');
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => NewsScreen(user: _currentUser)));
           break;
       }
     });

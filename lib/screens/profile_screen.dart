@@ -1,18 +1,29 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fynder/shared/actions_menu.dart';
 import 'package:fynder/shared/menu_bottom.dart';
 import 'package:fynder/shared/menu_drawer.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final User user;
+
+  const ProfileScreen({required this.user});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late User _currentUser;
+
+  @override
+  void initState() {
+    _currentUser = widget.user;
+    super.initState();
+  }
+
   final TextEditingController txtIdeaSummary = TextEditingController();
   final TextEditingController txtPersonalWebsiteLink = TextEditingController();
   final TextEditingController txtVideoLink = TextEditingController();
@@ -23,19 +34,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final double fontSize = 18;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           title: Image.asset('assets/FynderApplicationLogo.png',
               fit: BoxFit.cover),
-          actions: <Widget>[ActionsMenu()]),
-      bottomNavigationBar: MenuBottom(),
-      drawer: MenuDrawer(),
+          actions: <Widget>[ActionsMenu(user: _currentUser)]),
+      bottomNavigationBar: MenuBottom(user: _currentUser),
+      drawer: MenuDrawer(user: _currentUser),
       body: Center(
         child: SingleChildScrollView(
           child: Column(

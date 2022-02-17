@@ -19,9 +19,6 @@ class Fynder extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        // '/Swipe': (context) => SwipeScreen(),
-        '/Chat': (context) => ChatScreen(),
-        '/NewsSection': (context) => NewsScreen(),
       },
     );
   }

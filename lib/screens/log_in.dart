@@ -24,12 +24,12 @@ class _LogInState extends State<LogIn> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
     User? user = FirebaseAuth.instance.currentUser;
 
+    // for removing to need to enter email and password again in the same phone
     // if (user != null) {
     //   Navigator.of(context).pushReplacement(
     //     MaterialPageRoute(
