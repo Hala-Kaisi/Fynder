@@ -1,42 +1,42 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:fynder/screens/choose_account_type.dart';
-import 'package:fynder/screens/swipe_screen.dart';
-import 'package:fynder/services/fire_auth.dart';
-import 'package:fynder/services/validator.dart';
-import 'package:fynder/textdesign/my_theme.dart';
+import 'package:fynder/authentication_example/profile_page.dart';
+import 'package:fynder/authentication_example/register_page.dart';
+import 'package:fynder/authentication_example/validator.dart';
 
-class LogIn extends StatefulWidget {
-  const LogIn({Key? key}) : super(key: key);
+import 'fire_auth.dart';
 
+class LoginPage extends StatefulWidget {
   @override
-  State<LogIn> createState() => _LogInState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LogInState extends State<LogIn> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
 
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
 
   bool _isProcessing = false;
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
     User? user = FirebaseAuth.instance.currentUser;
 
-    // if (user != null) {
-    //   Navigator.of(context).pushReplacement(
-    //     MaterialPageRoute(
-    //       builder: (context) => SwipeScreen(user: user),
-    //     ),
-    //   );
-    // }
+    if (user != null) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(
+            user: user,
+          ),
+        ),
+      );
+    }
 
     return firebaseApp;
   }
@@ -49,7 +49,9 @@ class _LogInState extends State<LogIn> {
         _focusPassword.unfocus();
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Welcome')),
+        appBar: AppBar(
+          title: Text('Firebase Authentication'),
+        ),
         body: FutureBuilder(
           future: _initializeFirebase(),
           builder: (context, snapshot) {
@@ -69,9 +71,9 @@ class _LogInState extends State<LogIn> {
                     Form(
                       key: _formKey,
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           TextFormField(
-                            controller: emailController,
+                            controller: _emailTextController,
                             focusNode: _focusEmail,
                             validator: (value) => Validator.validateEmail(
                               email: value!,
@@ -88,7 +90,7 @@ class _LogInState extends State<LogIn> {
                           ),
                           SizedBox(height: 8.0),
                           TextFormField(
-                            controller: passwordController,
+                            controller: _passwordTextController,
                             focusNode: _focusPassword,
                             obscureText: true,
                             validator: (value) => Validator.validatePassword(
@@ -125,8 +127,9 @@ class _LogInState extends State<LogIn> {
 
                                             User? user = await FireAuth
                                                 .signInUsingEmailPassword(
-                                              email: emailController.text,
-                                              password: passwordController.text,
+                                              email: _emailTextController.text,
+                                              password:
+                                                  _passwordTextController.text,
                                             );
 
                                             setState(() {
@@ -138,7 +141,7 @@ class _LogInState extends State<LogIn> {
                                                   .pushReplacement(
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      SwipeScreen(user: user),
+                                                      ProfilePage(user: user),
                                                 ),
                                               );
                                             }
@@ -157,7 +160,7 @@ class _LogInState extends State<LogIn> {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  ChooseAccount(),
+                                                  RegisterPage(),
                                             ),
                                           );
                                         },
@@ -168,14 +171,15 @@ class _LogInState extends State<LogIn> {
                                       ),
                                     ),
                                   ],
-                                ),
+                                )
                         ],
                       ),
-                    ),
+                    )
                   ],
                 ),
               );
             }
+
             return Center(
               child: CircularProgressIndicator(),
             );
