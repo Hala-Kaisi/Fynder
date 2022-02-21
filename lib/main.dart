@@ -15,7 +15,13 @@ class Fynder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.lightBlue, inputDecorationTheme: MyTheme().theme()),
+      theme: ThemeData(
+          primarySwatch: Colors.lightBlue,
+          inputDecorationTheme: MyTheme().theme(),
+          buttonTheme: ButtonThemeData(
+            buttonColor: Colors.blueAccent,
+            shape: RoundedRectangleBorder(),
+          )),
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),

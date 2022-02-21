@@ -47,7 +47,7 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                 Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Text(
-                    'Welcome To Fynder - StartUp Account',
+                    'Welcome To Fynder \n Start Up Account',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.blue,
@@ -115,7 +115,7 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                             : Row(
                                 children: [
                                   Expanded(
-                                    child: ElevatedButton(
+                                    child: MaterialButton(
                                       onPressed: () async {
                                         setState(() {
                                           _isProcessing = true;
@@ -146,9 +146,13 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                                           }
                                         }
                                       },
+                                      color: Color(0Xff0095FF),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
                                       child: Text(
                                         'Sign up',
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18),
                                       ),
                                     ),
                                   ),

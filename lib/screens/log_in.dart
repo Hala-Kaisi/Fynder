@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -61,9 +63,12 @@ class _LogInState extends State<LogIn> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 24.0),
-                      child: Text(
-                        'Login',
-                        style: Theme.of(context).textTheme.headline1,
+                      child: const Text(
+                        "Welcome",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 60,
+                        ),
                       ),
                     ),
                     Form(
@@ -86,7 +91,7 @@ class _LogInState extends State<LogIn> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 8.0),
+                          SizedBox(height: 12.0),
                           TextFormField(
                             controller: passwordController,
                             focusNode: _focusPassword,
@@ -104,7 +109,7 @@ class _LogInState extends State<LogIn> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 24.0),
+                          SizedBox(height: 30.0),
                           _isProcessing
                               ? CircularProgressIndicator()
                               : Row(
@@ -112,7 +117,7 @@ class _LogInState extends State<LogIn> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: ElevatedButton(
+                                      child: MaterialButton(
                                         onPressed: () async {
                                           _focusEmail.unfocus();
                                           _focusPassword.unfocus();
@@ -144,15 +149,19 @@ class _LogInState extends State<LogIn> {
                                             }
                                           }
                                         },
+                                        color: Color(0Xff0095FF),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
                                         child: Text(
                                           'Sign In',
-                                          style: TextStyle(color: Colors.white),
+                                          style: TextStyle(color: Colors.white, fontSize: 18),
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: 24.0),
+                                    SizedBox(width: 30.0),
                                     Expanded(
-                                      child: ElevatedButton(
+                                      child: MaterialButton(
                                         onPressed: () {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
@@ -161,9 +170,13 @@ class _LogInState extends State<LogIn> {
                                             ),
                                           );
                                         },
+                                        color: Color(0Xff0095FF),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
                                         child: Text(
                                           'Register',
-                                          style: TextStyle(color: Colors.white),
+                                          style: TextStyle(color: Colors.white, fontSize: 18),
                                         ),
                                       ),
                                     ),
