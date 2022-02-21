@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>420635129081-fgu6r3oiot9ml0oqmhu550tkn7mesj4d.apps.googleusercontent.com</string>
+	<string>429895362505-3rimd84l8d1okd639fj0d2h7rpt2ge4v.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.420635129081-fgu6r3oiot9ml0oqmhu550tkn7mesj4d</string>
+	<string>com.googleusercontent.apps.429895362505-3rimd84l8d1okd639fj0d2h7rpt2ge4v</string>
 	<key>API_KEY</key>
-	<string>AIzaSyArjzSJPdPfWWhdbCxsXtXgz-AuWZBmGJQ</string>
+	<string>AIzaSyDe2jy1XPpjbppHSMxGALeFm6rcrG4v-gs</string>
 	<key>GCM_SENDER_ID</key>
-	<string>420635129081</string>
+	<string>429895362505</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.fynder</string>
 	<key>PROJECT_ID</key>
-	<string>fynderfirst</string>
+	<string>fynder-demo</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fynderfirst.appspot.com</string>
+	<string>fynder-demo.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:420635129081:ios:626e86063b1628577ade28</string>
+	<string>1:429895362505:ios:1655d5b1bc0633815b2a18</string>
+	<key>DATABASE_URL</key>
+	<string>https://fynder-demo-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
