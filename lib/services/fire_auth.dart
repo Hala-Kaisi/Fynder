@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fynder/services/database.dart';
 
 class FireAuth {
   // For registering a new user
@@ -30,6 +31,8 @@ class FireAuth {
       print(e);
     }
 
+    // create a new document for the user with the uid
+    await DatabaseService(user?.uid).updateUserData("Ahmet", "Duser", 21);
     return user;
   }
 
