@@ -15,6 +15,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool _isSendingVerification = false;
 
+  bool isVerified = false;
+
   late User _currentUser;
 
   @override
@@ -65,6 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ElevatedButton(
+                        style: ButtonStyle(fixedSize: MaterialStateProperty.all<Size>(Size(140,40))),
                         onPressed: () async {
                           setState(() {
                             _isSendingVerification = true;
@@ -96,8 +99,13 @@ class _ProfilePageState extends State<ProfilePage> {
               minWidth: 360,
               height: 60,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => StartupSingUp()));
+                // if (_currentUser.emailVerified == true) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => StartupSingUp()));
+                // }
+                // else {
+                //
+                // }
               },
               color: const Color(0xff0095FF),
               shape: RoundedRectangleBorder(

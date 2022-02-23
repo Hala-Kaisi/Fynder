@@ -115,7 +115,7 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                             : Row(
                                 children: [
                                   Expanded(
-                                    child: MaterialButton(
+                                    child: ElevatedButton(
                                       onPressed: () async {
                                         setState(() {
                                           _isProcessing = true;
@@ -146,10 +146,6 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                                           }
                                         }
                                       },
-                                      color: Color(0Xff0095FF),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
                                       child: Text(
                                         'Sign up',
                                         style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18),
