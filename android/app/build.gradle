@@ -70,4 +70,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx'
 }
 
+android {                                                                                                             
+    defaultConfig {                                                                                                     
+        minSdkVersion 19                                                                                                  
+   }                                                                                                                   
+} 
+
 apply plugin: 'com.google.gms.google-services'
