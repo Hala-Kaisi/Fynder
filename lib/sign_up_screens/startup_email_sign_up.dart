@@ -139,7 +139,7 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                                                 .pushAndRemoveUntil(
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ProfilePage(user: user),
+                                                    startupProfilePage(user: user),
                                               ),
                                               ModalRoute.withName('/'),
                                             );

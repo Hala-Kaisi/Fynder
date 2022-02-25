@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:fynder/services/fire_auth.dart';
 import 'package:fynder/sign_up_screens/startup_sign_up.dart';
 
-class ProfilePage extends StatefulWidget {
-  final User user;
+class startupProfilePage extends StatefulWidget {
 
-  const ProfilePage({required this.user});
+  final User user;
+  const startupProfilePage({required this.user});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _startupProfilePageState createState() => _startupProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _startupProfilePageState extends State<startupProfilePage> {
   bool _isSendingVerification = false;
 
   bool isVerified = false;
@@ -101,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 // if (_currentUser.emailVerified == true) {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StartupSingUp()));
+                      MaterialPageRoute(builder: (_) => StartupSignUp(user: _currentUser)));
                 // }
                 // else {
                 //

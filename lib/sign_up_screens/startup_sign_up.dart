@@ -1,15 +1,23 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:flutter/material.dart';
 
-class StartupSingUp extends StatefulWidget {
-  const StartupSingUp({Key? key}) : super(key: key);
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:fynder/screens/swipe_screen.dart';
+import 'package:fynder/services/database.dart';
+
+class StartupSignUp extends StatefulWidget {
+  final User user;
+
+  const StartupSignUp({required this.user});
 
   @override
-  _StartupSingUpState createState() => _StartupSingUpState();
+  _StartupSignUpState createState() => _StartupSignUpState();
 }
 
-class _StartupSingUpState extends State<StartupSingUp> {
+class _StartupSignUpState extends State<StartupSignUp> {
+
+  late User _currentUser;
   final TextEditingController txtIdeaSummary = TextEditingController();
   final TextEditingController txtPersonalWebsiteLink = TextEditingController();
   final TextEditingController txtVideoLink = TextEditingController();
@@ -21,6 +29,7 @@ class _StartupSingUpState extends State<StartupSingUp> {
 
   @override
   void initState() {
+    _currentUser = widget.user;
     super.initState();
   }
 
@@ -49,48 +58,13 @@ class _StartupSingUpState extends State<StartupSingUp> {
                   padding: const EdgeInsets.all(24.0),
                   child: TextField(
                     controller: txtIdeaSummary,
-                    decoration: InputDecoration(hintText: 'E-Mail'),
+                    decoration: InputDecoration(hintText: 'Idea Summary'),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: TextField(
                     controller: txtPersonalWebsiteLink,
-                    decoration: InputDecoration(hintText: 'Password'),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: TextField(
-                    controller: txtVideoLink,
-                    decoration: InputDecoration(hintText: 'Confirm Password'),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: TextField(
-                    controller: txtTargetFunds,
-                    decoration: InputDecoration(hintText: 'First Name'),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: TextField(
-                    controller: txtMarketSegment,
-                    decoration: InputDecoration(hintText: 'Last Name'),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: TextField(
-                    controller: txtInvestmentType,
-                    decoration: InputDecoration(hintText: 'Investment Type'),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: TextField(
-                    controller: txtInvestmentType,
                     decoration:
                         InputDecoration(hintText: 'Personal Website Link'),
                   ),
@@ -98,7 +72,7 @@ class _StartupSingUpState extends State<StartupSingUp> {
                 Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: TextField(
-                    controller: txtInvestmentType,
+                    controller: txtVideoLink,
                     decoration:
                         InputDecoration(hintText: 'Elevator Speech Link'),
                   ),
@@ -106,14 +80,14 @@ class _StartupSingUpState extends State<StartupSingUp> {
                 Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: TextField(
-                    controller: txtInvestmentType,
+                    controller: txtTargetFunds,
                     decoration: InputDecoration(hintText: 'Target Funds'),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: TextField(
-                    controller: txtInvestmentType,
+                    controller: txtMarketSegment,
                     decoration: InputDecoration(hintText: 'Market Segment'),
                   ),
                 ),
@@ -127,7 +101,20 @@ class _StartupSingUpState extends State<StartupSingUp> {
                 MaterialButton(
                   minWidth: 360,
                   height: 60,
-                  onPressed: () {},
+                  onPressed: () {
+                    DatabaseService(uid : _currentUser.uid).updateStartupData(
+                        true, false, txtIdeaSummary.text,
+                        txtPersonalWebsiteLink.text, txtVideoLink.text,
+                        txtTargetFunds.text, txtMarketSegment.text,
+                        txtInvestmentType.text);
+                    Navigator.of(context)
+                        .pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            SwipeScreen(user: _currentUser),
+                      ),
+                    );
+                  },
                   color: const Color(0xff0095FF),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50)),

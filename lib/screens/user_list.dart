@@ -17,8 +17,6 @@ class _UserListState extends State<UserList> {
 
     users.forEach((user) {
       print(user.name);
-      print(user.surname);
-      print(user.age);
     });
 
     return Container();

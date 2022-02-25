@@ -1,15 +1,22 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fynder/screens/swipe_screen.dart';
+import 'package:fynder/services/database.dart';
 
 class InvestorSignUp extends StatefulWidget {
-  const InvestorSignUp({Key? key}) : super(key: key);
+
+  final User user;
+  const InvestorSignUp({required this.user});
 
   @override
   _InvestorSignUpState createState() => _InvestorSignUpState();
 }
 
 class _InvestorSignUpState extends State<InvestorSignUp> {
+
+  late User _currentUser;
   final TextEditingController txtDescription = TextEditingController();
   final TextEditingController txtPersonalWebsiteLink = TextEditingController();
   final TextEditingController txtVideoLink = TextEditingController();
@@ -18,6 +25,7 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
 
   @override
   void initState() {
+    _currentUser = widget.user;
     super.initState();
   }
 
@@ -71,7 +79,19 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                     fontSize: fontSize,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  DatabaseService(uid : _currentUser.uid).updateInvestorData(
+                      false, true, txtDescription.text,
+                      txtPersonalWebsiteLink.text,
+                      txtVideoLink.text);
+                  Navigator.of(context)
+                      .pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          SwipeScreen(user: _currentUser),
+                    ),
+                  );
+                },
               ),
             ],
           ),

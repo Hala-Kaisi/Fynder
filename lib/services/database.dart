@@ -1,6 +1,7 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fynder/models/user_profile.dart';
-import 'package:fynder/screens/user_list.dart';
 
 class DatabaseService {
 
@@ -11,11 +12,35 @@ class DatabaseService {
   // collection reference
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('userlist');
 
-  Future updateUserData(String name, String surname, int age) async {
+  Future updateUserData(String name) async {
     return await userCollection.doc(uid).set({
-      'name' : name,
-      'surname' : surname,
-      'age' : age
+      'name' : name
+    });
+  }
+
+  updateStartupData(bool startup, bool investor, String ideaSummary,
+      String personalLink, String videoLink, String targetFunds, String marketSegment,
+      String investmentType) async {
+    return await userCollection.doc(uid).set({
+      'startup' : true,
+      'investor' : false,
+      'ideaSummary' : ideaSummary,
+      'websiteLink' : personalLink,
+      'videoLink' : videoLink,
+      'targetFunds' : targetFunds,
+      'marketSegment' : marketSegment,
+      'investmentType' : investmentType
+    });
+  }
+
+  updateInvestorData(bool startup, bool investor, String description,
+      String personalLink, String videoLink) async {
+    return await userCollection.doc(uid).set({
+      'startup' : false,
+      'investor' : true,
+      'ideaSummary' : description,
+      'websiteLink' : personalLink,
+      'videoLink' : videoLink
     });
   }
 
@@ -24,9 +49,7 @@ class DatabaseService {
     return snapshot.docs.map((doc){
       //print(doc.data);
       return UserProfile(
-          name: doc.get('name') ?? '',
-          surname: doc.get('surname') ?? '',
-          age: doc.get('age') ?? 0
+          name: doc.get('name') ?? ''
       );
     }).toList();
   }

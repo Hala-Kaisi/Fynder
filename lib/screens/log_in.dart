@@ -3,11 +3,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:fynder/screens/choose_account_type.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/services/fire_auth.dart';
 import 'package:fynder/services/validator.dart';
-import 'package:fynder/textdesign/my_theme.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -160,26 +158,6 @@ class _LogInState extends State<LogIn> {
                                       ),
                                     ),
                                     SizedBox(width: 30.0),
-                                    Expanded(
-                                      child: MaterialButton(
-                                        onPressed: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChooseAccount(),
-                                            ),
-                                          );
-                                        },
-                                        color: Color(0Xff0095FF),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(25),
-                                        ),
-                                        child: Text(
-                                          'Register',
-                                          style: TextStyle(color: Colors.white, fontSize: 18),
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                         ],

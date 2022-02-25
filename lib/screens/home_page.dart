@@ -68,6 +68,27 @@ class HomePage extends StatelessWidget {
                   ),
                   // creating the signup button
                   const SizedBox(height: 20),
+                  MaterialButton(
+                    color: Color(0Xff0095FF),
+                    minWidth: double.infinity,
+                    height: 60,
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => ChooseAccount()));
+                    },
+                    // defining the shape
+                    shape: RoundedRectangleBorder(
+                      // side: const BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(50)),
+                    child: const Text(
+                      "Sign Up",
+                      style:
+                      TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18),
+                    ),
+                  ),
+                  // creating the signup button
+                  const SizedBox(height: 20),
+
                 ],
               )
             ],
