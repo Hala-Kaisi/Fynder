@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/services/database.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:fynder/services/storage.dart';
 
 class StartupSignUp extends StatefulWidget {
   final User user;
@@ -35,6 +37,8 @@ class _StartupSignUpState extends State<StartupSignUp> {
 
   @override
   Widget build(BuildContext context) {
+    final Storage storage = Storage();
+    final startupUID = _currentUser.uid;
     return Scaffold(
         appBar: AppBar(
           title: Image.asset('assets/FynderApplicationLogo.png',
@@ -101,12 +105,31 @@ class _StartupSignUpState extends State<StartupSignUp> {
                 MaterialButton(
                   minWidth: 360,
                   height: 60,
+                  onPressed: () async {
+                    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                    final imagePath = image?.path;
+                    storage.uplaodFile(imagePath!, 'startupPic-$startupUID');
+                  },
+                  color: const Color(0xff0095FF),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
+                  child: const Text(
+                    'Upload Startup Picture',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18),
+                  ),
+                ),
+                MaterialButton(
+                  minWidth: 360,
+                  height: 60,
                   onPressed: () {
                     DatabaseService(uid : _currentUser.uid).updateStartupData(
-                        true, false, txtIdeaSummary.text,
+                        _currentUser.displayName!, true, false, txtIdeaSummary.text,
                         txtPersonalWebsiteLink.text, txtVideoLink.text,
                         txtTargetFunds.text, txtMarketSegment.text,
-                        txtInvestmentType.text);
+                        txtInvestmentType.text, 'startupPic-$startupUID');
                     Navigator.of(context)
                         .pushReplacement(
                       MaterialPageRoute(

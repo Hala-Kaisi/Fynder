@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/services/database.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:fynder/services/storage.dart';
 
 class InvestorSignUp extends StatefulWidget {
 
@@ -31,6 +33,8 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
 
   @override
   Widget build(BuildContext context) {
+    final Storage storage = Storage();
+    final investorUID = _currentUser.uid;
     return Scaffold(
       appBar: AppBar(
         title:
@@ -72,18 +76,33 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                   decoration: InputDecoration(hintText: 'Youtube Video Link'),
                 ),
               ),
-              ElevatedButton(
-                child: Text(
-                  'Save and Proceed',
+              MaterialButton(
+                minWidth: 360,
+                height: 60,
+                onPressed: () async {
+                  final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  final imagePath = image?.path;
+                  storage.uplaodFile(imagePath!, 'investorPic-$investorUID');
+                },
+                color: const Color(0xff0095FF),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                child: const Text(
+                  'Upload Profile Picture',
                   style: TextStyle(
-                    fontSize: fontSize,
-                  ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
                 ),
+              ),
+              MaterialButton(
+                minWidth: 360,
+                height: 60,
                 onPressed: () {
                   DatabaseService(uid : _currentUser.uid).updateInvestorData(
-                      false, true, txtDescription.text,
-                      txtPersonalWebsiteLink.text,
-                      txtVideoLink.text);
+                      _currentUser.displayName!, true, false, txtDescription.text,
+                      txtPersonalWebsiteLink.text, txtVideoLink.text,
+                      'startupPic-$investorUID');
                   Navigator.of(context)
                       .pushReplacement(
                     MaterialPageRoute(
@@ -92,6 +111,16 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                     ),
                   );
                 },
+                color: const Color(0xff0095FF),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                child: const Text(
+                  'Save and Proceed',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                ),
               ),
             ],
           ),

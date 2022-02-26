@@ -1,9 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:fynder/screens/chat_screen.dart';
 import 'package:fynder/screens/home_page.dart';
-import 'package:fynder/screens/news_section.dart';
-import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/textdesign/my_theme.dart';
 
 void main() async {
