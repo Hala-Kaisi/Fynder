@@ -1,12 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fynder/models/user_profile.dart';
-import 'package:fynder/screens/user_list.dart';
-import 'package:fynder/services/database.dart';
 import 'package:fynder/shared/actions_menu.dart';
 import 'package:fynder/shared/menu_drawer.dart';
 import 'package:fynder/shared/menu_bottom.dart';
-import 'package:provider/provider.dart';
 
 class SwipeScreen extends StatefulWidget {
   final User user;
@@ -18,7 +14,6 @@ class SwipeScreen extends StatefulWidget {
 }
 
 class _SwipeScreenState extends State<SwipeScreen> {
-
   late User _currentUser;
 
   @override
@@ -29,18 +24,16 @@ class _SwipeScreenState extends State<SwipeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<UserProfile>>.value(
-      value: DatabaseService().users,
-      initialData: [],
-      child: Scaffold(
-        appBar: AppBar(
-          title:
-          Image.asset('assets/FynderApplicationLogo.png', fit: BoxFit.cover),
-          actions: <Widget>[ActionsMenu(user: _currentUser)],
-        ),
-        bottomNavigationBar: MenuBottom(user: _currentUser),
-        drawer: MenuDrawer(user: _currentUser),
-        body: UserList(),
+    return Scaffold(
+      appBar: AppBar(
+        title:
+            Image.asset('assets/FynderApplicationLogo.png', fit: BoxFit.cover),
+        actions: <Widget>[ActionsMenu(user: _currentUser)],
+      ),
+      bottomNavigationBar: MenuBottom(user: _currentUser),
+      drawer: MenuDrawer(user: _currentUser),
+      body: Center(
+        child: Text("Swipe Screen"),
       ),
     );
   }

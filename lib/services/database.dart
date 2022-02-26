@@ -45,19 +45,4 @@ class DatabaseService {
       'videoLink': videoLink
     });
   }
-
-  // user list from snapshot
-  List<UserProfile> _userListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      //print(doc.data);
-      return UserProfile(
-          name: doc.get('name') ?? '',
-          surname: doc.get('surname') ?? '',
-          age: doc.get('age') ?? 0);
-    }).toList();
-  }
-
-  Stream<List<UserProfile>> get users {
-    return userCollection.snapshots().map(_userListFromSnapshot);
-  }
 }
