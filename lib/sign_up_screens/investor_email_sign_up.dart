@@ -2,8 +2,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fynder/authentication_example/fire_auth.dart';
-import 'package:fynder/authentication_example/validator.dart';
+import 'package:fynder/services/fire_auth.dart';
+import 'package:fynder/services/validator.dart';
 import 'package:fynder/sign_up_screens/investor_email_verification_page.dart';
 
 
