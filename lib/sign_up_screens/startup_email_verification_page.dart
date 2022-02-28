@@ -4,8 +4,8 @@ import 'package:fynder/services/fire_auth.dart';
 import 'package:fynder/sign_up_screens/startup_sign_up.dart';
 
 class startupProfilePage extends StatefulWidget {
-
   final User user;
+
   const startupProfilePage({required this.user});
 
   @override
@@ -67,7 +67,9 @@ class _startupProfilePageState extends State<startupProfilePage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ElevatedButton(
-                        style: ButtonStyle(fixedSize: MaterialStateProperty.all<Size>(Size(140,40))),
+                        style: ButtonStyle(
+                            fixedSize:
+                                MaterialStateProperty.all<Size>(Size(140, 40))),
                         onPressed: () async {
                           setState(() {
                             _isSendingVerification = true;
@@ -99,13 +101,15 @@ class _startupProfilePageState extends State<startupProfilePage> {
               minWidth: 360,
               height: 60,
               onPressed: () {
-                // if (_currentUser.emailVerified == true) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => StartupSignUp(user: _currentUser)));
-                // }
-                // else {
-                //
-                // }
+                if (_currentUser.emailVerified == true) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => StartupSignUp(user: _currentUser)));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Email is not verified')));
+                }
               },
               color: const Color(0xff0095FF),
               shape: RoundedRectangleBorder(

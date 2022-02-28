@@ -47,65 +47,69 @@ class _investorProfilePageState extends State<investorProfilePage> {
             SizedBox(height: 16.0),
             _currentUser.emailVerified
                 ? Text(
-              'Email verified',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(color: Colors.green),
-            )
+                    'Email verified',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(color: Colors.green),
+                  )
                 : Text(
-              'Email not verified',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(color: Colors.red),
-            ),
+                    'Email not verified',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(color: Colors.red),
+                  ),
             SizedBox(height: 16.0),
             _isSendingVerification
                 ? CircularProgressIndicator()
                 : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton(
-                  style: ButtonStyle(fixedSize: MaterialStateProperty.all<Size>(Size(140,40))),
-                  onPressed: () async {
-                    setState(() {
-                      _isSendingVerification = true;
-                    });
-                    await _currentUser.sendEmailVerification();
-                    setState(() {
-                      _isSendingVerification = false;
-                    });
-                  },
-                  child: Text('Verify email'),
-                ),
-                SizedBox(width: 8.0),
-                IconButton(
-                  icon: Icon(Icons.refresh),
-                  onPressed: () async {
-                    User? user = await FireAuth.refreshUser(_currentUser);
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            fixedSize:
+                                MaterialStateProperty.all<Size>(Size(140, 40))),
+                        onPressed: () async {
+                          setState(() {
+                            _isSendingVerification = true;
+                          });
+                          await _currentUser.sendEmailVerification();
+                          setState(() {
+                            _isSendingVerification = false;
+                          });
+                        },
+                        child: Text('Verify email'),
+                      ),
+                      SizedBox(width: 8.0),
+                      IconButton(
+                        icon: Icon(Icons.refresh),
+                        onPressed: () async {
+                          User? user = await FireAuth.refreshUser(_currentUser);
 
-                    if (user != null) {
-                      setState(() {
-                        _currentUser = user;
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
+                          if (user != null) {
+                            setState(() {
+                              _currentUser = user;
+                            });
+                          }
+                        },
+                      ),
+                    ],
+                  ),
             SizedBox(height: 16.0),
             MaterialButton(
               minWidth: 360,
               height: 60,
               onPressed: () {
-                // if (_currentUser.emailVerified == true) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => InvestorSignUp(user: _currentUser)));
-                // }
-                // else {
-                //
-                // }
+                if (_currentUser.emailVerified == true) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => InvestorSignUp(user: _currentUser)));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Email is not verified')));
+                }
               },
               color: const Color(0xff0095FF),
               shape: RoundedRectangleBorder(
