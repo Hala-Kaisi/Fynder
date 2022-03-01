@@ -11,7 +11,7 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('userlist');
 
   Future createUser(String name) async {
-    return await userCollection.doc(uid).set({'name': name});
+    return userCollection.doc(uid);
   }
 
   updateStartupData(

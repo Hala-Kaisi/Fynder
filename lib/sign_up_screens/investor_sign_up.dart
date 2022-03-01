@@ -19,6 +19,7 @@ class InvestorSignUp extends StatefulWidget {
 class _InvestorSignUpState extends State<InvestorSignUp> {
 
   late User _currentUser;
+  final TextEditingController txtName = TextEditingController();
   final TextEditingController txtDescription = TextEditingController();
   final TextEditingController txtPersonalWebsiteLink = TextEditingController();
   final TextEditingController txtVideoLink = TextEditingController();
@@ -52,6 +53,13 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                     fontSize: 18,
                     color: Colors.blue,
                   ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: TextField(
+                  controller: txtName,
+                  decoration: InputDecoration(hintText: 'Full Name'),
                 ),
               ),
               Padding(
@@ -100,7 +108,7 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                 height: 60,
                 onPressed: () {
                   DatabaseService(uid : _currentUser.uid).updateInvestorData(
-                      _currentUser.displayName!, true, false, txtDescription.text,
+                      txtName.text, true, false, txtDescription.text,
                       txtPersonalWebsiteLink.text, txtVideoLink.text,
                       'startupPic-$investorUID');
                   Navigator.of(context)

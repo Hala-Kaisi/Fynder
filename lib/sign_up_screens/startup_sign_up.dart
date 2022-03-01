@@ -20,6 +20,7 @@ class StartupSignUp extends StatefulWidget {
 class _StartupSignUpState extends State<StartupSignUp> {
 
   late User _currentUser;
+  final TextEditingController txtName = TextEditingController();
   final TextEditingController txtIdeaSummary = TextEditingController();
   final TextEditingController txtPersonalWebsiteLink = TextEditingController();
   final TextEditingController txtVideoLink = TextEditingController();
@@ -56,6 +57,13 @@ class _StartupSignUpState extends State<StartupSignUp> {
                       fontSize: 18,
                       color: Colors.blue,
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: TextField(
+                    controller: txtName,
+                    decoration: InputDecoration(hintText: 'Full Name'),
                   ),
                 ),
                 Padding(
@@ -126,7 +134,7 @@ class _StartupSignUpState extends State<StartupSignUp> {
                   height: 60,
                   onPressed: () {
                     DatabaseService(uid : _currentUser.uid).updateStartupData(
-                        _currentUser.displayName!, true, false, txtIdeaSummary.text,
+                        txtName.text, true, false, txtIdeaSummary.text,
                         txtPersonalWebsiteLink.text, txtVideoLink.text,
                         txtTargetFunds.text, txtMarketSegment.text,
                         txtInvestmentType.text, 'startupPic-$startupUID');

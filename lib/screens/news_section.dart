@@ -35,10 +35,6 @@ class _NewsScreenState extends State<NewsScreen> {
       drawer: MenuDrawer(user: _currentUser),
       body: Column(
         children: [
-          Text(
-            'NAME: ${_currentUser.displayName}',
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
           SizedBox(height: 16.0),
           Text(
             'EMAIL: ${_currentUser.email}',

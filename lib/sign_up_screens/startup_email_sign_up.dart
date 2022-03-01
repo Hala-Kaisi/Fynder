@@ -14,11 +14,9 @@ class StartupEmailSignUp extends StatefulWidget {
 class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
   final _registerFormKey = GlobalKey<FormState>();
 
-  final TextEditingController txtName = TextEditingController();
   final TextEditingController txtEmail = TextEditingController();
   final TextEditingController txtPassword = TextEditingController();
 
-  final _focusName = FocusNode();
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
 
@@ -30,7 +28,6 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _focusName.unfocus();
         _focusEmail.unfocus();
         _focusPassword.unfocus();
       },
@@ -58,22 +55,7 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                     key: _registerFormKey,
                     child: Column(
                       children: <Widget>[
-                        TextFormField(
-                          controller: txtName,
-                          focusNode: _focusName,
-                          validator: (value) => Validator.validateName(
-                            name: value!,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: "Name",
-                            errorBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
-                              ),
-                            ),
-                          ),
-                        ),
+
                         SizedBox(height: 16.0),
                         TextFormField(
                           controller: txtEmail,
@@ -125,7 +107,6 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                                             .validate()) {
                                           User? user = await FireAuth
                                               .registerUsingEmailPassword(
-                                            name: txtName.text,
                                             email: txtEmail.text,
                                             password: txtPassword.text,
                                           );

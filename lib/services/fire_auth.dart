@@ -4,7 +4,6 @@ import 'package:fynder/services/database.dart';
 class FireAuth {
   // For registering a new user
   static Future<User?> registerUsingEmailPassword({
-    required String name,
     required String email,
     required String password,
   }) async {
@@ -18,8 +17,7 @@ class FireAuth {
       );
 
       user = userCredential.user;
-      await user!.updateProfile(displayName: name);
-      await user.reload();
+      await user!.reload();
       user = auth.currentUser;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -32,7 +30,7 @@ class FireAuth {
     }
 
     // create a new document for the user with the uid
-    await DatabaseService(uid: user?.uid).createUser(name);
+    DatabaseService(uid: user?.uid).createUser;
     return user;
   }
 
