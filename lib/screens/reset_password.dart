@@ -40,28 +40,6 @@ class _ResetScreenState extends State<ResetScreen> {
           ],
         ),
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       ElevatedButton(
-      //           onPressed: () async {
-      //             FirebaseAuth.instance
-      //                 .sendPasswordResetEmail(email: controller.text)
-      //                 .then((value) {
-      //               Navigator.push(context,
-      //                   MaterialPageRoute(builder: (context) => LogIn()));
-      //             });
-      //           },
-      //           child: Text("Send recovery link"))
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
-    // ignore: empty_statements
-    
-  
-
