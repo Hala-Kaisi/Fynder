@@ -39,38 +39,32 @@ class _ChooseAccountState extends State<ChooseAccount> {
           children: [
             Align(
               child: ToggleButtons(
-                  //borderRadius: BorderRadius.circular(50),
-                  children: [
+                  borderRadius: BorderRadius.circular(50),
+                  fillColor: Colors.lightBlue,
+                  selectedColor: Colors.white,
+                  textStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w600),
+                  children: const [
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 45, vertical: 20),
+                      EdgeInsets.symmetric(horizontal: 45, vertical: 20),
                       child:
-                          Text("Startup", style: TextStyle(fontSize: fontSize)),
+                      Text("Startup"),
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 45, vertical: 20),
-                      child: Text("Investor",
-                          style: TextStyle(fontSize: fontSize)),
-                    ),
+                      EdgeInsets.symmetric(horizontal: 45, vertical: 20),
+                      child: Text("Investor"),
+                    )
                   ], isSelected: isSelected, onPressed: toggleMeasure),
             ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                margin: const EdgeInsets.all(50),
-                child: MaterialButton(
-                  minWidth: double.infinity,
-                  height: 60,
-                  color: const Color(0xff0095FF),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
+                padding:
+                EdgeInsets.symmetric(horizontal: 45, vertical: 200),
+                child: ElevatedButton(
                   child: Text(
-                    'Proceed',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: fontSize,
-                    ),
+                    'Proceed'
                   ),
                   onPressed: () {
                     if (isStartup == true) {
