@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fynder/models/startup.dart';
 
+import '../models/investor.dart';
+
 class DatabaseService {
   final String? uid;
 
@@ -14,47 +16,11 @@ class DatabaseService {
     return userCollection.doc(uid);
   }
 
-  updateStartupData(
-      String name,
-      bool startup,
-      bool investor,
-      String ideaSummary,
-      String personalLink,
-      String videoLink,
-      String targetFunds,
-      String marketSegment,
-      String investmentType,
-      String pic) async {
-    return await userCollection.doc(uid).set({
-      'name': name,
-      'startup': true,
-      'investor': false,
-      'ideaSummary': ideaSummary,
-      'websiteLink': personalLink,
-      'videoLink': videoLink,
-      'targetFunds': targetFunds,
-      'marketSegment': marketSegment,
-      'investmentType': investmentType,
-      'picture': pic
-    });
+  Future<void> saveStartupUserDataToFirestore(Startup startup) {
+    return userCollection.doc(uid).set(startup.toMap());
   }
 
-  updateInvestorData(
-      String name,
-      bool startup,
-      bool investor,
-      String description,
-      String personalLink,
-      String videoLink,
-      String pic) async {
-    return await userCollection.doc(uid).set({
-      'fullName': name,
-      'startup': false,
-      'investor': true,
-      'ideaSummary': description,
-      'websiteLink': personalLink,
-      'videoLink': videoLink,
-      'profilePicture': pic
-    });
+  Future<void> saveInvestorUserDataToFirestore(Investor investor) {
+    return userCollection.doc(uid).set(investor.toMap());
   }
 }
