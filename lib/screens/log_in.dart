@@ -16,13 +16,14 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   final _formKey = GlobalKey<FormState>();
 
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
 
   bool _isProcessing = false;
-
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  bool hidePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,108 +36,132 @@ class _LogInState extends State<LogIn> {
         appBar: AppBar(title: const Text('Welcome')),
         body: Padding(
           padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 24.0),
-                child: const Text(
-                  "Welcome",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 60,
-                  ),
-                ),
+              Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(10),
+                child: Image.asset('assets/FynderApplicationLogo.png',
+                    fit: BoxFit.cover),
               ),
+              Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(10),
+                  child: const Text(
+                    'Sign in',
+                    style: TextStyle(fontSize: 20),
+                  )),
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: emailController,
-                      focusNode: _focusEmail,
-                      validator: (value) => Validator.validateEmail(
-                        email: value!,
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child: TextFormField(
+                        controller: emailController,
+                        focusNode: _focusEmail,
+                        validator: (value) => Validator.validateEmail(
+                          email: value!,
+                        ),
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person),
+                          labelText: 'Email',
+                          helperText: '',
+                          hintText: 'Email',
+                        ),
                       ),
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        errorBorder: UnderlineInputBorder(
-                          borderRadius: BorderRadius.circular(6.0),
-                          borderSide: BorderSide(
-                            color: Colors.red,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: TextFormField(
+                        controller: passwordController,
+                        focusNode: _focusPassword,
+                        obscureText: hidePassword,
+                        validator: (value) => Validator.validatePassword(
+                          password: value!,
+                        ),
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.lock),
+                          labelText: 'Password',
+                          helperText: '',
+                          hintText: 'Password',
+                          suffixIcon: InkWell(
+                            onTap: _passwordView,
+                            child: hidePassword
+                                ? Icon(Icons.visibility_off)
+                                : Icon(Icons.visibility),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 12.0),
-                    TextFormField(
-                      controller: passwordController,
-                      focusNode: _focusPassword,
-                      obscureText: true,
-                      validator: (value) => Validator.validatePassword(
-                        password: value!,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        errorBorder: UnderlineInputBorder(
-                          borderRadius: BorderRadius.circular(6.0),
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                          ),
-                        ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Forgot Password',
                       ),
                     ),
-                    SizedBox(height: 30.0),
                     _isProcessing
                         ? CircularProgressIndicator()
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: MaterialButton(
-                                  onPressed: () async {
-                                    _focusEmail.unfocus();
-                                    _focusPassword.unfocus();
+                        : Column(
+                      children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(
+                              10, 10, 10, 0),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              _focusEmail.unfocus();
+                              _focusPassword.unfocus();
 
-                                    if (_formKey.currentState!.validate()) {
-                                      setState(() {
-                                        _isProcessing = true;
-                                      });
+                              if (_formKey.currentState!.validate()) {
+                                setState(() {
+                                  _isProcessing = true;
+                                });
 
-                                      User? user = await FireAuth
-                                          .signInUsingEmailPassword(
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                      );
+                                User? user = await FireAuth
+                                    .signInUsingEmailPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
 
-                                      setState(() {
-                                        _isProcessing = false;
-                                      });
+                                setState(() {
+                                  _isProcessing = false;
+                                });
 
-                                      if (user != null) {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SwipeScreen(user: user),
-                                          ),
-                                        );
-                                      }
-                                    }
-                                  },
-                                  color: Color(0Xff0095FF),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  child: Text(
-                                    'Sign In',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 30.0),
-                            ],
+                                if (user != null) {
+                                  Navigator.of(context)
+                                      .pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SwipeScreen(user: user,))
+                                    //ProfilePage(user: user),
+                                  );
+                                }
+                              }
+                            },
+                            child: Text(
+                              'Log In',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
+                        ),
+                        SizedBox(height: 24.0),
+                        Row(
+                          children: <Widget>[
+                            const Text('Does not have account?'),
+                            TextButton(
+                              child: const Text(
+                                'Sign Up',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              onPressed: () {
+
+                              },
+                            )
+                          ],
+                          mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -145,5 +170,10 @@ class _LogInState extends State<LogIn> {
         ),
       ),
     );
+  }
+  void _passwordView() {
+    setState(() {
+      hidePassword = !hidePassword;
+    });
   }
 }

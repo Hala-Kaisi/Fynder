@@ -35,8 +35,6 @@ class HomePage extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
                 child: Column(
                   // even space distribution
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,9 +54,8 @@ class HomePage extends StatelessWidget {
                         ),
                         Text(
                           "To Fynder ",
-                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.grey[700],
+                            fontWeight: FontWeight.w600,
                             fontSize: 20,
                           ),
                         )
@@ -73,25 +70,21 @@ class HomePage extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         // the login button
-                        MaterialButton(
-                          color: Color(0Xff0095FF),
-                          minWidth: double.infinity,
-                          height: 60,
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            side: MaterialStateProperty.all<BorderSide>(
+                            BorderSide(color: Colors.black12),
+                            ),
+                            backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white)),
                           onPressed: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => LogIn()));
+                              MaterialPageRoute(builder: (_) => LogIn()));
                           },
-                          // defining the shape
-                          shape: RoundedRectangleBorder(
-                              // side: const BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.circular(50)),
                           child: const Text(
                             "Login",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18),
-                          ),
+                            style: TextStyle(color: Colors.black),
+                            ),
                         ),
                         // creating the signup button
                         const SizedBox(height: 20),
@@ -106,6 +99,7 @@ class HomePage extends StatelessWidget {
                             "Sign up",
                           ),
                         ),
+                        const SizedBox(height: 20),
                       ],
                     )
                   ],
