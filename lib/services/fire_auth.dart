@@ -32,7 +32,7 @@ class FireAuth {
     }
 
     // create a new document for the user with the uid
-    await DatabaseService(uid : user?.uid).updateUserData(name);
+    await DatabaseService(uid: user?.uid).createUser(name);
     return user;
   }
 

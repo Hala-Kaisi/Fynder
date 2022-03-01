@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fynder/models/user_profile.dart';
+import 'package:fynder/models/startup.dart';
 
 class DatabaseService {
   final String? uid;
@@ -10,7 +10,7 @@ class DatabaseService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('userlist');
 
-  Future updateUserData(String name) async {
+  Future createUser(String name) async {
     return await userCollection.doc(uid).set({'name': name});
   }
 
@@ -35,7 +35,7 @@ class DatabaseService {
       'targetFunds': targetFunds,
       'marketSegment': marketSegment,
       'investmentType': investmentType,
-      'pictrue': pic
+      'picture': pic
     });
   }
 
@@ -56,20 +56,5 @@ class DatabaseService {
       'videoLink': videoLink,
       'profilePicture': pic
     });
-  }
-
-  // user list from snapshot
-  List<UserProfile> _brewListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      //print(doc.data);
-      return UserProfile(
-          name: doc.get('name') ?? '',
-          surname: doc.get('surname') ?? '',
-          age: doc.get('age') ?? '');
-    }).toList();
-  }
-
-  Stream<List<UserProfile>> get users {
-    return userCollection.snapshots().map(_brewListFromSnapshot);
   }
 }
