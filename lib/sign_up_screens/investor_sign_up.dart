@@ -2,14 +2,15 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fynder/models/investor.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/services/database.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fynder/services/storage.dart';
 
 class InvestorSignUp extends StatefulWidget {
-
   final User user;
+
   const InvestorSignUp({required this.user});
 
   @override
@@ -17,7 +18,6 @@ class InvestorSignUp extends StatefulWidget {
 }
 
 class _InvestorSignUpState extends State<InvestorSignUp> {
-
   late User _currentUser;
   final TextEditingController txtName = TextEditingController();
   final TextEditingController txtDescription = TextEditingController();
@@ -88,7 +88,8 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                 minWidth: 360,
                 height: 60,
                 onPressed: () async {
-                  final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  final image = await ImagePicker()
+                      .pickImage(source: ImageSource.gallery);
                   final imagePath = image?.path;
                   storage.uplaodFile(imagePath!, 'investorPic-$investorUID');
                 },
@@ -107,15 +108,17 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                 minWidth: 360,
                 height: 60,
                 onPressed: () {
-                  DatabaseService(uid : _currentUser.uid).updateInvestorData(
-                      txtName.text, true, false, txtDescription.text,
-                      txtPersonalWebsiteLink.text, txtVideoLink.text,
-                      'startupPic-$investorUID');
-                  Navigator.of(context)
-                      .pushReplacement(
+                  Investor investor = Investor(
+                      name: txtName.text,
+                      description: txtDescription.text,
+                      videoLink: txtVideoLink.text,
+                      personalLink: txtPersonalWebsiteLink.text,
+                      pic: 'startupPic-$investorUID');
+                  DatabaseService(uid: _currentUser.uid)
+                      .saveInvestorUserDataToFirestore(investor);
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) =>
-                          SwipeScreen(user: _currentUser),
+                      builder: (context) => SwipeScreen(user: _currentUser),
                     ),
                   );
                 },
