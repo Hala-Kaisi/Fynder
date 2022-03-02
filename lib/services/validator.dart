@@ -42,4 +42,17 @@ class Validator {
 
     return null;
   }
+  /*static String? validateConfirmPassword({required String? confirmPassword}) {
+    if (confirmPassword == null) {
+      return null;
+    }
+
+    if (confirmPassword.isEmpty) {
+      return 'Confirm password can\'t be empty';
+    } else if (confirmPassword.length < 6) {
+      return 'Enter a password with length at least 6';
+    }
+
+    return null;
+  }*/
 }

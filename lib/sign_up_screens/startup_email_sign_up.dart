@@ -16,13 +16,17 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
 
   final TextEditingController txtEmail = TextEditingController();
   final TextEditingController txtPassword = TextEditingController();
+  final TextEditingController txtConfirmPassword = TextEditingController();
 
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
+  final _focusConfirmPassword = FocusNode();
 
   final double fontSize = 18;
 
   bool _isProcessing = false;
+  bool hidePassword=true;
+  bool hideconfirmPassword=true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +34,13 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
       onTap: () {
         _focusEmail.unfocus();
         _focusPassword.unfocus();
+        _focusConfirmPassword.unfocus();
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Image.asset('assets/FynderApplicationLogo.png',
-              fit: BoxFit.cover),
+          title: Image.asset('assets/FynderApplicationLogo.png', fit: BoxFit.cover),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(24.0),
+        body: Center(
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -46,102 +49,124 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                   child: Text(
                     'Welcome To Fynder \n Start Up Account',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 24,
                       color: Colors.blue,
                     ),
                   ),
                 ),
-                Form(
-                    key: _registerFormKey,
-                    child: Column(
-                      children: <Widget>[
-
-                        SizedBox(height: 16.0),
-                        TextFormField(
-                          controller: txtEmail,
-                          focusNode: _focusEmail,
-                          validator: (value) => Validator.validateEmail(
-                            email: value!,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 24,
+                    right: 24,
+                    top:24,
+                    bottom: 10,
+                  ),
+                  child: Form(
+                      key: _registerFormKey,
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            controller: txtEmail,
+                            focusNode: _focusEmail,
+                            validator: (value) => Validator.validateEmail(
+                              email: value!,
+                            ),
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.mail),
+                              labelText: 'Email',
+                              helperText: '',
+                              hintText: 'Email',
+                            ),
                           ),
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            errorBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
+                          SizedBox(height: 12.0),
+                          TextFormField(
+                            controller: txtConfirmPassword,
+                            focusNode: _focusConfirmPassword,
+                            obscureText: hidePassword,
+                            validator: (value) => Validator.validatePassword(
+                              password: value!,
+                            ),
+                            decoration: InputDecoration(prefixIcon: Icon(Icons.lock),
+                              labelText: 'Password',
+                              helperText: '',
+                              hintText: 'Password',
+                              suffixIcon: InkWell(
+                                onTap: _passwordView,
+                                child: hidePassword ? Icon(Icons.visibility_off ): Icon(Icons.visibility),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 16.0),
-                        TextFormField(
-                          controller: txtPassword,
-                          focusNode: _focusPassword,
-                          obscureText: true,
-                          validator: (value) => Validator.validatePassword(
-                            password: value!,
-                          ),
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                            errorBorder: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                              borderSide: BorderSide(
-                                color: Colors.red,
+                          SizedBox(height: 12.0),
+                          TextFormField(
+                            controller: txtPassword,
+                            focusNode: _focusPassword,
+                            obscureText: hideconfirmPassword,
+                            decoration: InputDecoration(prefixIcon: Icon(Icons.lock),
+                              labelText: 'Confirm Password',
+                              helperText: '',
+                              hintText: 'Confirm Password',
+                              suffixIcon: InkWell(
+                                onTap: _confirmPasswordView,
+                                child: hideconfirmPassword ? Icon(Icons.visibility_off ): Icon(Icons.visibility),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 32.0),
-                        _isProcessing
-                            ? CircularProgressIndicator()
-                            : Row(
-                                children: [
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () async {
-                                        setState(() {
-                                          _isProcessing = true;
-                                        });
-
-                                        if (_registerFormKey.currentState!
-                                            .validate()) {
-                                          User? user = await FireAuth
-                                              .registerUsingEmailPassword(
-                                            email: txtEmail.text,
-                                            password: txtPassword.text,
-                                          );
-
+                          SizedBox(height: 12.0),
+                          _isProcessing
+                              ? CircularProgressIndicator()
+                              : Row(
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () async {
                                           setState(() {
-                                            _isProcessing = false;
+                                            _isProcessing = true;
                                           });
 
-                                          if (user != null) {
-                                            Navigator.of(context)
-                                                .pushAndRemoveUntil(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    startupProfilePage(user: user),
-                                              ),
-                                              ModalRoute.withName('/'),
+                                          if (_registerFormKey.currentState!
+                                              .validate()) {
+                                            User? user = await FireAuth
+                                                .registerUsingEmailPassword(
+                                              email: txtEmail.text,
+                                              password: txtPassword.text,
                                             );
+
+                                            setState(() {
+                                              _isProcessing = false;
+                                            });
+
+                                            if (user != null && txtPassword.text==txtConfirmPassword.text) {
+                                              Navigator.of(context)
+                                                  .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      startupProfilePage(user: user),
+                                                ),
+                                                ModalRoute.withName('/'),
+                                              );
+                                            }
                                           }
-                                        }
-                                      },
-                                      child: Text(
-                                        'Sign up',
-                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18),
+                                        },
+                                        child: Text(
+                                          'Sign up',),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                      ],
-                    )),
+                                  ],
+                                ),
+                        ],
+                      )),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+  void _passwordView(){
+    setState((){hidePassword=!hidePassword;});
+  }
+  void _confirmPasswordView(){
+    setState((){hideconfirmPassword=!hideconfirmPassword;});
   }
 }
