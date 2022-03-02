@@ -127,15 +127,7 @@ class _LogInState extends State<LogIn> {
                                   _isProcessing = false;
                                 });
 
-                                if (user != null) {
-                                  Navigator.of(context)
-                                      .pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SwipeScreen(user: user,))
-                                    //ProfilePage(user: user),
-                                  );
-                                }
+                                checkUserLoged(user, context);
                               }
                             },
                             child: Text(
@@ -170,6 +162,18 @@ class _LogInState extends State<LogIn> {
         ),
       ),
     );
+  }
+
+  void checkUserLoged(User? user, BuildContext context) {
+    if (user != null) {
+      Navigator.of(context)
+          .pushReplacement(
+          MaterialPageRoute(
+              builder: (context) =>
+                  SwipeScreen(user: user,))
+        //ProfilePage(user: user),
+      );
+    }
   }
   void _passwordView() {
     setState(() {
