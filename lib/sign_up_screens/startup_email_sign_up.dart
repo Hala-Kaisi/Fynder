@@ -25,8 +25,8 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
   final double fontSize = 18;
 
   bool _isProcessing = false;
-  bool hidePassword=true;
-  bool hideconfirmPassword=true;
+  bool _hidePassword=true;
+  bool _hideconfirmPassword=true;
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +80,9 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                           ),
                           SizedBox(height: 12.0),
                           TextFormField(
-                            controller: txtConfirmPassword,
-                            focusNode: _focusConfirmPassword,
-                            obscureText: hidePassword,
+                            controller: txtPassword,
+                            focusNode: _focusPassword,
+                            obscureText: _hidePassword,
                             validator: (value) => Validator.validatePassword(
                               password: value!,
                             ),
@@ -92,22 +92,24 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                               hintText: 'Password',
                               suffixIcon: InkWell(
                                 onTap: _passwordView,
-                                child: hidePassword ? Icon(Icons.visibility_off ): Icon(Icons.visibility),
+                                child: _hidePassword ? Icon(Icons.visibility_off ): Icon(Icons.visibility),
                               ),
                             ),
                           ),
                           SizedBox(height: 12.0),
                           TextFormField(
-                            controller: txtPassword,
-                            focusNode: _focusPassword,
-                            obscureText: hideconfirmPassword,
+                            controller: txtConfirmPassword,
+                            focusNode: _focusConfirmPassword,
+                            obscureText: _hideconfirmPassword,
+                            validator: (value) => Validator.validateConfirmPassword(confirmPassword: value!, Password:txtPassword.text ),
                             decoration: InputDecoration(prefixIcon: Icon(Icons.lock),
                               labelText: 'Confirm Password',
                               helperText: '',
                               hintText: 'Confirm Password',
                               suffixIcon: InkWell(
+
                                 onTap: _confirmPasswordView,
-                                child: hideconfirmPassword ? Icon(Icons.visibility_off ): Icon(Icons.visibility),
+                                child: _hideconfirmPassword ? Icon(Icons.visibility_off ): Icon(Icons.visibility),
                               ),
                             ),
                           ),
@@ -119,12 +121,11 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                                     Expanded(
                                       child: ElevatedButton(
                                         onPressed: () async {
-                                          setState(() {
-                                            _isProcessing = true;
-                                          });
-
                                           if (_registerFormKey.currentState!
                                               .validate()) {
+                                            setState(() {
+                                              _isProcessing = true;
+                                            });
                                             User? user = await FireAuth
                                                 .registerUsingEmailPassword(
                                               email: txtEmail.text,
@@ -135,7 +136,7 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
                                               _isProcessing = false;
                                             });
 
-                                            if (user != null && txtPassword.text==txtConfirmPassword.text) {
+                                            if (user != null ) {
                                               Navigator.of(context)
                                                   .pushAndRemoveUntil(
                                                 MaterialPageRoute(
@@ -164,9 +165,9 @@ class _StartupEmailSignUpState extends State<StartupEmailSignUp> {
     );
   }
   void _passwordView(){
-    setState((){hidePassword=!hidePassword;});
+    setState((){_hidePassword=!_hidePassword;});
   }
   void _confirmPasswordView(){
-    setState((){hideconfirmPassword=!hideconfirmPassword;});
+    setState((){_hideconfirmPassword=!_hideconfirmPassword;});
   }
 }

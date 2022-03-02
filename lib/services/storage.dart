@@ -12,7 +12,7 @@ class Storage {
     File file = File(filePath);
 
     try {
-      await storage.ref('$fileName').putFile(file);
+      await storage.ref(fileName).putFile(file);
     } on firebase_core.FirebaseException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Could not upload Picture. Please try again.')
