@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fynder/services/database.dart';
 
 class FireAuth {
+  static String message = '';
   // For registering a new user
   static Future<User?> registerUsingEmailPassword({
     required String email,
@@ -50,9 +51,9 @@ class FireAuth {
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        message = 'user-not-found';
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided.');
+        message = 'wrong-password';
       }
     }
 
