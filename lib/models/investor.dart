@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Investor {
   final String name;
   final String description;
@@ -26,10 +28,11 @@ class Investor {
   }
 
   // retrieve data from firestore
-  factory Investor.fromFirestore(Map<String, dynamic> firestore) => Investor(
-      name: firestore['name'],
-      description: firestore['description'],
-      personalLink: firestore['personalLink'],
-      videoLink: firestore['videoLink'],
-      pic: firestore['picture']);
+  // retrieve data from firestore
+  Investor.fromSnapshot(DocumentSnapshot snapshot)
+      : name = snapshot['name'],
+        description = snapshot['description'],
+        personalLink = snapshot['personalLink'],
+        videoLink = snapshot['videoLink'],
+        pic = snapshot['picture'];
 }

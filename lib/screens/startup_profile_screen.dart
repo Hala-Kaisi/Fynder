@@ -9,16 +9,16 @@ import 'package:fynder/shared/menu_drawer.dart';
 
 import '../models/startup.dart';
 
-class ProfileScreen extends StatefulWidget {
+class StartupProfileScreen extends StatefulWidget {
   final User user;
 
-  const ProfileScreen({required this.user});
+  const StartupProfileScreen({required this.user});
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _StartupProfileScreenState createState() => _StartupProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _StartupProfileScreenState extends State<StartupProfileScreen> {
   late User _currentUser;
   late String? ideaSummary;
   late String? personalWebsiteLink;

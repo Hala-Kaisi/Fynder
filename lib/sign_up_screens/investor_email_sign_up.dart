@@ -6,9 +6,7 @@ import 'package:fynder/services/fire_auth.dart';
 import 'package:fynder/services/validator.dart';
 import 'package:fynder/sign_up_screens/investor_email_verification_page.dart';
 
-
 class InvestorEmailSignUp extends StatefulWidget {
-
   const InvestorEmailSignUp({Key? key}) : super(key: key);
 
   @override
@@ -16,7 +14,6 @@ class InvestorEmailSignUp extends StatefulWidget {
 }
 
 class _InvestorEmailSignUpState extends State<InvestorEmailSignUp> {
-
   final _registerFormKey = GlobalKey<FormState>();
 
   final TextEditingController txtEmail = TextEditingController();
@@ -99,46 +96,51 @@ class _InvestorEmailSignUpState extends State<InvestorEmailSignUp> {
                         _isProcessing
                             ? CircularProgressIndicator()
                             : Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  setState(() {
-                                    _isProcessing = true;
-                                  });
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        setState(() {
+                                          _isProcessing = true;
+                                        });
 
-                                  if (_registerFormKey.currentState!
-                                      .validate()) {
-                                    User? user = await FireAuth
-                                        .registerUsingEmailPassword(
-                                      email: txtEmail.text,
-                                      password: txtPassword.text,
-                                    );
+                                        if (_registerFormKey.currentState!
+                                            .validate()) {
+                                          User? user = await FireAuth
+                                              .registerUsingEmailPassword(
+                                            name: 'investor',
+                                            email: txtEmail.text,
+                                            password: txtPassword.text,
+                                          );
 
-                                    setState(() {
-                                      _isProcessing = false;
-                                    });
+                                          setState(() {
+                                            _isProcessing = false;
+                                          });
 
-                                    if (user != null) {
-                                      Navigator.of(context)
-                                          .pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              investorProfilePage(user: user),
-                                        ),
-                                        ModalRoute.withName('/'),
-                                      );
-                                    }
-                                  }
-                                },
-                                child: Text(
-                                  'Sign up',
-                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18),
-                                ),
+                                          if (user != null) {
+                                            Navigator.of(context)
+                                                .pushAndRemoveUntil(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    investorProfilePage(
+                                                        user: user),
+                                              ),
+                                              ModalRoute.withName('/'),
+                                            );
+                                          }
+                                        }
+                                      },
+                                      child: Text(
+                                        'Sign up',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
                       ],
                     )),
               ],
@@ -149,4 +151,3 @@ class _InvestorEmailSignUpState extends State<InvestorEmailSignUp> {
     );
   }
 }
-
