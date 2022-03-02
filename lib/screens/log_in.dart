@@ -15,6 +15,7 @@ class LogIn extends StatefulWidget {
 
 class _LogInState extends State<LogIn> {
   final _formKey = GlobalKey<FormState>();
+  String message = '';
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -103,57 +104,70 @@ class _LogInState extends State<LogIn> {
                     _isProcessing
                         ? CircularProgressIndicator()
                         : Column(
-                      children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(
-                              10, 10, 10, 0),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              _focusEmail.unfocus();
-                              _focusPassword.unfocus();
+                            children: <Widget>[
+                              Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    _focusEmail.unfocus();
+                                    _focusPassword.unfocus();
 
-                              if (_formKey.currentState!.validate()) {
-                                setState(() {
-                                  _isProcessing = true;
-                                });
+                                    if (_formKey.currentState!.validate()) {
+                                      setState(() {
+                                        _isProcessing = true;
+                                      });
 
-                                User? user = await FireAuth
-                                    .signInUsingEmailPassword(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                );
+                                      User? user = await FireAuth
+                                          .signInUsingEmailPassword(
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                      );
 
-                                setState(() {
-                                  _isProcessing = false;
-                                });
+                                      setState(() {
+                                        _isProcessing = false;
+                                      });
+                                      if (FireAuth.message ==
+                                          'user-not-found') {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content:
+                                                    Text('user not found')));
+                                      }
 
-                                checkUserLoged(user, context);
-                              }
-                            },
-                            child: Text(
-                              'Log In',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 24.0),
-                        Row(
-                          children: <Widget>[
-                            const Text('Does not have account?'),
-                            TextButton(
-                              child: const Text(
-                                'Sign Up',
-                                style: TextStyle(fontSize: 20),
+                                      if (FireAuth.message ==
+                                          'wrong-password') {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content:
+                                                    Text('wrong password')));
+                                      }
+
+                                      checkUserLoged(user, context);
+                                    }
+                                  },
+                                  child: Text(
+                                    'Log In',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
                               ),
-                              onPressed: () {
-
-                              },
-                            )
-                          ],
-                          mainAxisAlignment: MainAxisAlignment.center,
-                        ),
-                      ],
-                    )
+                              SizedBox(height: 24.0),
+                              Row(
+                                children: <Widget>[
+                                  const Text('Does not have account?'),
+                                  TextButton(
+                                    child: const Text(
+                                      'Sign Up',
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    onPressed: () {},
+                                  )
+                                ],
+                                mainAxisAlignment: MainAxisAlignment.center,
+                              ),
+                            ],
+                          )
                   ],
                 ),
               ),
@@ -166,15 +180,15 @@ class _LogInState extends State<LogIn> {
 
   void checkUserLoged(User? user, BuildContext context) {
     if (user != null) {
-      Navigator.of(context)
-          .pushReplacement(
-          MaterialPageRoute(
-              builder: (context) =>
-                  SwipeScreen(user: user,))
-        //ProfilePage(user: user),
-      );
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => SwipeScreen(
+                    user: user,
+                  ))
+          //ProfilePage(user: user),
+          );
     }
   }
+
   void _passwordView() {
     setState(() {
       hidePassword = !hidePassword;
