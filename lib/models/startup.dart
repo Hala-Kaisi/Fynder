@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Startup {
   final String name;
   final String ideaSummary;
@@ -35,13 +37,13 @@ class Startup {
   }
 
   // retrieve data from firestore
-  factory Startup.fromFirestore(Map<String, dynamic> firestore) => Startup(
-      name: firestore['name'],
-      ideaSummary: firestore['ideaSummary'],
-      personalLink: firestore['personalLink'],
-      videoLink: firestore['videoLink'],
-      targetFunds: firestore['targetFunds'],
-      marketSegment: firestore['marketSegment'],
-      investmentType: firestore['investmentType'],
-      pic: firestore['picture']);
+  Startup.fromSnapshot(DocumentSnapshot snapshot)
+      : name = snapshot['name'],
+        ideaSummary = snapshot['ideaSummary'],
+        personalLink = snapshot['personalLink'],
+        videoLink = snapshot['videoLink'],
+        targetFunds = snapshot['targetFunds'],
+        marketSegment = snapshot['marketSegment'],
+        investmentType = snapshot['investmentType'],
+        pic = snapshot['picture'];
 }
