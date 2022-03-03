@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:fynder/services/fire_auth.dart';
 import 'package:fynder/sign_up_screens/investor_sign_up.dart';
 
-class investorProfilePage extends StatefulWidget {
+class InvestorEmailVerification extends StatefulWidget {
   final User user;
 
-  const investorProfilePage({required this.user});
+  const InvestorEmailVerification({required this.user});
 
   @override
-  _investorProfilePageState createState() => _investorProfilePageState();
+  _InvestorEmailVerificationState createState() => _InvestorEmailVerificationState();
 }
 
-class _investorProfilePageState extends State<investorProfilePage> {
+class _InvestorEmailVerificationState extends State<InvestorEmailVerification> {
   bool _isSendingVerification = false;
 
   bool isVerified = false;

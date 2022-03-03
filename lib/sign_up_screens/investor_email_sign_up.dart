@@ -122,7 +122,7 @@ class _InvestorEmailSignUpState extends State<InvestorEmailSignUp> {
                                                 .pushAndRemoveUntil(
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    investorProfilePage(
+                                                    InvestorEmailVerification(
                                                         user: user),
                                               ),
                                               ModalRoute.withName('/'),

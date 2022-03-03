@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:fynder/services/fire_auth.dart';
 import 'package:fynder/sign_up_screens/startup_sign_up.dart';
 
-class startupProfilePage extends StatefulWidget {
+class StartupEmailVerification extends StatefulWidget {
   final User user;
 
-  const startupProfilePage({required this.user});
+  const StartupEmailVerification({required this.user});
 
   @override
-  _startupProfilePageState createState() => _startupProfilePageState();
+  _StartupEmailVerificationState createState() => _StartupEmailVerificationState();
 }
 
-class _startupProfilePageState extends State<startupProfilePage> {
+class _StartupEmailVerificationState extends State<StartupEmailVerification> {
   bool _isSendingVerification = false;
 
   bool isVerified = false;
