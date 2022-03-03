@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fynder/screens/chat_list.dart';
 import 'package:fynder/shared/actions_menu.dart';
 import 'package:fynder/shared/menu_drawer.dart';
 import 'package:fynder/shared/menu_bottom.dart';
@@ -34,8 +35,16 @@ class _matchList extends State<matchList> {
         title:
         Text('New Chat'),
         actions: <Widget>[ActionsMenu(user: _currentUser)],
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => chatList(user: _currentUser)),
+            );
+          },
+        ),
       ),
-      bottomNavigationBar: MenuBottom(user: _currentUser),
       drawer: MenuDrawer(user: _currentUser),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
