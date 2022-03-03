@@ -13,6 +13,8 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('userlist');
 
   Future createUser(String name) async {
+    await userCollection.doc(uid).collection('matchList');
+    await userCollection.doc(uid).collection('chats');
     return userCollection.doc(uid);
   }
 
