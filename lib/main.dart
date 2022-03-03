@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fynder/screens/home_page.dart';
 import 'package:fynder/textdesign/my_theme.dart';
 
-void main()  {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(Fynder());
 }
 
