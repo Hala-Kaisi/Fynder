@@ -25,6 +25,7 @@ class DatabaseService {
     var matched = await userCollection.doc(matchedID).collection('swipedRight')
         .doc(uid).get();
     if(matched.exists){
+      userCollection.doc(uid).collection('matchList').doc(matchedID);
       return true;
     }
     return false;
