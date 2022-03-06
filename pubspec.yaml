@@ -49,6 +49,8 @@ dependencies:
   google_fonts: ^2.1.0
   intl: ^0.17.0
   page_transition: ^2.0.4
+  url_launcher: ^6.0.20
+  swipable_stack: ^1.2.0
 
 dev_dependencies:
   flutter_test:
