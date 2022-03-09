@@ -26,6 +26,18 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
   late String? targetFunds;
   late String? marketSegment;
   late String? investmentType;
+  late String? location;
+
+  String locationValue = 'EU Zone';
+
+  var locationList = [
+    "EU Zone",
+    "Middle East",
+    "Asia",
+    "USA",
+    "North Africa",
+    "Canada"
+  ];
 
   @override
   void initState() {
@@ -63,6 +75,7 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                 targetFunds = startup?.targetFunds;
                 marketSegment = startup?.marketSegment;
                 investmentType = startup?.investmentType;
+                location = startup?.location;
                 return Column(
                   children: [
                     Padding(
@@ -134,6 +147,43 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                             InputDecoration(hintText: 'Investment Type'),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Text('$location'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: FormField<String>(
+                        builder: (FormFieldState<String> state) {
+                          return InputDecorator(
+                            decoration: InputDecoration(
+                                errorStyle: TextStyle(
+                                    color: Colors.redAccent, fontSize: 16.0),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0))),
+                            isEmpty: locationValue == '',
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: locationValue,
+                                isDense: true,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    locationValue = newValue!;
+                                    state.didChange(newValue);
+                                  });
+                                },
+                                items: locationList.map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                     ElevatedButton(
                       child: Text(
                         'Save',
@@ -141,8 +191,7 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                           fontSize: fontSize,
                         ),
                       ),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     ),
                   ],
                 );
