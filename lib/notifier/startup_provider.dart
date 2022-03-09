@@ -14,6 +14,7 @@ class StartupProvider extends ChangeNotifier {
   String? _targetFunds;
   String? _marketSegment;
   String? _investmentType;
+  String? _location;
   String? _pic;
 
   String? get name => _name;
@@ -29,6 +30,8 @@ class StartupProvider extends ChangeNotifier {
   String? get marketSegment => _marketSegment;
 
   String? get investmentType => _investmentType;
+
+  String? get location => _location;
 
   String? get pic => _pic;
 
@@ -67,6 +70,10 @@ class StartupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set changeLocation(String value) {
+    _location = value;
+  }
+
   set changeName(String value) {
     _name = value;
     notifyListeners();
@@ -81,6 +88,7 @@ class StartupProvider extends ChangeNotifier {
         targetFunds: _targetFunds ?? '',
         marketSegment: _marketSegment ?? '',
         investmentType: _investmentType ?? '',
+        location: _location ?? '',
         pic: _pic ?? '');
     databaseService.saveStartupUserDataToFirestore(newStartupProfile);
   }

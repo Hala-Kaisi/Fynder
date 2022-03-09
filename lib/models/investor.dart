@@ -5,6 +5,7 @@ class Investor {
   final String description;
   final String personalLink;
   final String videoLink;
+  final String? location;
   final String pic;
 
   Investor(
@@ -12,6 +13,7 @@ class Investor {
       required this.description,
       required this.personalLink,
       required this.videoLink,
+      required this.location,
       required this.pic});
 
   // send data to Firestore
@@ -22,17 +24,18 @@ class Investor {
       'videoLink': videoLink,
       'picture': pic,
       'name': name,
+      'location': location,
       'investor': true,
       'startup': false
     };
   }
 
   // retrieve data from firestore
-  // retrieve data from firestore
   Investor.fromSnapshot(DocumentSnapshot snapshot)
       : name = snapshot['name'],
         description = snapshot['description'],
         personalLink = snapshot['personalLink'],
         videoLink = snapshot['videoLink'],
+        location = snapshot['location'],
         pic = snapshot['picture'];
 }

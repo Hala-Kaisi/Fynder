@@ -26,6 +26,16 @@ class _StartupSignUpState extends State<StartupSignUp> {
   final TextEditingController txtTargetFunds = TextEditingController();
   final TextEditingController txtMarketSegment = TextEditingController();
   final TextEditingController txtInvestmentType = TextEditingController();
+  String locationValue = 'EU Zone';
+
+  var locationList = [
+    "EU Zone",
+    "Middle East",
+    "Asia",
+    "USA",
+    "North Africa",
+    "Canada"
+  ];
 
   final double fontSize = 18;
 
@@ -108,6 +118,39 @@ class _StartupSignUpState extends State<StartupSignUp> {
                   decoration: InputDecoration(hintText: 'Investment Type'),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: FormField<String>(
+                  builder: (FormFieldState<String> state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              color: Colors.redAccent, fontSize: 16.0),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0))),
+                      isEmpty: locationValue == '',
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: locationValue,
+                          isDense: true,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              locationValue = newValue!;
+                              state.didChange(newValue);
+                            });
+                          },
+                          items: locationList.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
               MaterialButton(
                 minWidth: 360,
                 height: 60,
@@ -140,6 +183,7 @@ class _StartupSignUpState extends State<StartupSignUp> {
                       targetFunds: txtTargetFunds.text,
                       marketSegment: txtMarketSegment.text,
                       investmentType: txtInvestmentType.text,
+                      location: locationValue,
                       pic: 'startupPic-$startupUID');
                   DatabaseService(uid: _currentUser.uid)
                       .saveStartupUserDataToFirestore(startup);
@@ -165,5 +209,16 @@ class _StartupSignUpState extends State<StartupSignUp> {
         ),
       ),
     );
+  }
+
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("EU Zone"), value: "EU"),
+      DropdownMenuItem(child: Text("Middle East"), value: "ME"),
+      DropdownMenuItem(child: Text("North Africa"), value: "NA"),
+      DropdownMenuItem(child: Text("USA"), value: "USA"),
+      DropdownMenuItem(child: Text("Canada"), value: "CA"),
+    ];
+    return menuItems;
   }
 }

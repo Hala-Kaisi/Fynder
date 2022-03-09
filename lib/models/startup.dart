@@ -8,6 +8,7 @@ class Startup {
   final String targetFunds;
   final String marketSegment;
   final String investmentType;
+  final String? location;
   final String pic;
 
   Startup(
@@ -18,6 +19,7 @@ class Startup {
       required this.targetFunds,
       required this.marketSegment,
       required this.investmentType,
+      required this.location,
       required this.pic});
 
   // send data to Firestore
@@ -31,6 +33,7 @@ class Startup {
       'investmentType': investmentType,
       'picture': pic,
       'name': name,
+      'location': location,
       'investor': false,
       'startup': true
     };
@@ -45,5 +48,6 @@ class Startup {
         targetFunds = snapshot['targetFunds'],
         marketSegment = snapshot['marketSegment'],
         investmentType = snapshot['investmentType'],
+        location = snapshot['location'],
         pic = snapshot['picture'];
 }
