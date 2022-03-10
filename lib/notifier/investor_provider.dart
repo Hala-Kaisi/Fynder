@@ -5,7 +5,10 @@ import '../services/database.dart';
 import '../services/fire_auth.dart';
 
 class InvestorProvider extends ChangeNotifier {
-  final databaseService = DatabaseService();
+  final String? uid;
+
+  InvestorProvider({this.uid});
+
   final authService = FireAuth();
 
   String? _name;
@@ -59,6 +62,7 @@ class InvestorProvider extends ChangeNotifier {
         videoLink: _videoLink ?? '',
         location: _location ?? '',
         pic: _pic ?? '');
-    databaseService.saveInvestorUserDataToFirestore(newInvestorProfile);
+    DatabaseService(uid: uid)
+        .saveInvestorUserDataToFirestore(newInvestorProfile);
   }
 }
