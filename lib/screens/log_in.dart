@@ -100,8 +100,7 @@ class _LogInState extends State<LogIn> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => ResetScreen())
-                        );
+                            builder: (context) => ResetScreen()));
                       },
                       child: const Text(
                         'Forgot Password',
@@ -173,9 +172,6 @@ class _LogInState extends State<LogIn> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                               ),
                             ],
-
-                          )
-
                           ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -202,7 +198,6 @@ class _LogInState extends State<LogIn> {
                         SizedBox(width: 150.0),
                       ],
                     ),
-
                   ],
                 ),
               ),
