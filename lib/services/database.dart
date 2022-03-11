@@ -13,7 +13,26 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('userlist');
 
   Future createUser(String name) async {
+    await userCollection.doc(uid).collection('matchList');
+    await userCollection.doc(uid).collection('chats');
+    userCollection.doc(uid).collection('swipedRight');
+    userCollection.doc(uid).collection('swipedLeft');
     return userCollection.doc(uid);
+  }
+
+  Future<bool> swipedRight(String matchedID) async {
+    userCollection.doc(uid).collection('swipedRight').doc(matchedID);
+    var matched = await userCollection.doc(matchedID).collection('swipedRight')
+        .doc(uid).get();
+    if(matched.exists){
+      userCollection.doc(uid).collection('matchList').doc(matchedID);
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> swipedLeft(String unmatchedID) async {
+    userCollection.doc(uid).collection('swipedLeft').doc(unmatchedID);
   }
 
   Future<void> saveStartupUserDataToFirestore(Startup startup) {

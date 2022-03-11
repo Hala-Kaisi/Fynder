@@ -2,7 +2,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fynder/screens/profile_screen.dart';
+import 'package:fynder/screens/investor_profile_screen.dart';
+import 'package:fynder/screens/startup_profile_screen.dart';
 
 class MenuDrawer extends StatefulWidget {
   final User user;
@@ -57,7 +58,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
           onTap: () {
             switch (element) {
               case 'Profile':
-                screen = ProfileScreen(user: _currentUser);
+                if (_currentUser.displayName == 'startup') {
+                  screen = StartupProfileScreen(user: _currentUser);
+                }
+                if (_currentUser.displayName == 'investor') {
+                  screen = InvestorProfileScreen(user: _currentUser);
+                }
                 break;
             }
             Navigator.of(context).pop(); // removes the drawer from the stack

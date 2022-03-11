@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fynder/models/investor.dart';
+import 'package:fynder/notifier/investor_provider.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/services/database.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,6 +24,17 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
   final TextEditingController txtDescription = TextEditingController();
   final TextEditingController txtPersonalWebsiteLink = TextEditingController();
   final TextEditingController txtVideoLink = TextEditingController();
+
+  String locationValue = 'EU Zone';
+
+  var locationList = [
+    "EU Zone",
+    "Middle East",
+    "Asia",
+    "USA",
+    "North Africa",
+    "Canada"
+  ];
 
   final double fontSize = 18;
 
@@ -84,6 +96,39 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                   decoration: InputDecoration(hintText: 'Youtube Video Link'),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: FormField<String>(
+                  builder: (FormFieldState<String> state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              color: Colors.redAccent, fontSize: 16.0),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0))),
+                      isEmpty: locationValue == '',
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: locationValue,
+                          isDense: true,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              locationValue = newValue!;
+                              state.didChange(newValue);
+                            });
+                          },
+                          items: locationList.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
               MaterialButton(
                 minWidth: 360,
                 height: 60,
@@ -108,14 +153,15 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                 minWidth: 360,
                 height: 60,
                 onPressed: () {
-                  Investor investor = Investor(
-                      name: txtName.text,
-                      description: txtDescription.text,
-                      videoLink: txtVideoLink.text,
-                      personalLink: txtPersonalWebsiteLink.text,
-                      pic: 'startupPic-$investorUID');
-                  DatabaseService(uid: _currentUser.uid)
-                      .saveInvestorUserDataToFirestore(investor);
+                  InvestorProvider investorProvider =
+                      InvestorProvider(uid: _currentUser.uid);
+                  investorProvider.changeDescription = txtDescription.text;
+                  investorProvider.changeVideoLink = txtVideoLink.text;
+                  investorProvider.changePersonalLink =
+                      txtPersonalWebsiteLink.text;
+                  investorProvider.changeLocation = locationValue;
+                  investorProvider.saveInvestorProfile();
+
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => SwipeScreen(user: _currentUser),
@@ -138,5 +184,16 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
         ),
       ),
     );
+  }
+
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("EU Zone"), value: "EU"),
+      DropdownMenuItem(child: Text("Middle East"), value: "ME"),
+      DropdownMenuItem(child: Text("North Africa"), value: "NA"),
+      DropdownMenuItem(child: Text("USA"), value: "USA"),
+      DropdownMenuItem(child: Text("Canada"), value: "CA"),
+    ];
+    return menuItems;
   }
 }

@@ -5,13 +5,17 @@ import '../services/database.dart';
 import '../services/fire_auth.dart';
 
 class InvestorProvider extends ChangeNotifier {
-  final databaseService = DatabaseService();
+  final String? uid;
+
+  InvestorProvider({this.uid});
+
   final authService = FireAuth();
 
   String? _name;
   String? _description;
   String? _personalLink;
   String? _videoLink;
+  String? _location;
   String? _pic;
 
   String? get name => _name;
@@ -21,6 +25,8 @@ class InvestorProvider extends ChangeNotifier {
   String? get personalLink => _personalLink;
 
   String? get videoLink => _videoLink;
+
+  String? get location => _location;
 
   String? get pic => _pic;
 
@@ -40,6 +46,10 @@ class InvestorProvider extends ChangeNotifier {
     _description = value;
   }
 
+  set changeLocation(String value) {
+    _location = value;
+  }
+
   set changeName(String value) {
     _name = value;
   }
@@ -50,7 +60,9 @@ class InvestorProvider extends ChangeNotifier {
         description: _description ?? '',
         personalLink: _personalLink ?? '',
         videoLink: _videoLink ?? '',
+        location: _location ?? '',
         pic: _pic ?? '');
-    databaseService.saveInvestorUserDataToFirestore(newInvestorProfile);
+    DatabaseService(uid: uid)
+        .saveInvestorUserDataToFirestore(newInvestorProfile);
   }
 }

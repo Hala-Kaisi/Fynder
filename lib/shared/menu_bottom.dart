@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fynder/screens/chat_list.dart';
 import 'package:fynder/screens/chat_screen.dart';
 import 'package:fynder/screens/news_section.dart';
 import 'package:fynder/screens/swipe_screen.dart';
@@ -36,7 +37,7 @@ class _MenuBottomState extends State<MenuBottom> {
           break;
         case 1:
           Navigator.push(context,
-              MaterialPageRoute(builder: (_) => ChatScreen(user: _currentUser)));
+              MaterialPageRoute(builder: (_) => chatList(user: _currentUser)));
           break;
         case 2:
           Navigator.push(context,

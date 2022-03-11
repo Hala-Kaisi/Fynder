@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Investor {
   final String name;
   final String description;
   final String personalLink;
   final String videoLink;
+  final String? location;
   final String pic;
 
   Investor(
@@ -10,6 +13,7 @@ class Investor {
       required this.description,
       required this.personalLink,
       required this.videoLink,
+      required this.location,
       required this.pic});
 
   // send data to Firestore
@@ -20,16 +24,18 @@ class Investor {
       'videoLink': videoLink,
       'picture': pic,
       'name': name,
+      'location': location,
       'investor': true,
       'startup': false
     };
   }
 
   // retrieve data from firestore
-  factory Investor.fromFirestore(Map<String, dynamic> firestore) => Investor(
-      name: firestore['name'],
-      description: firestore['description'],
-      personalLink: firestore['personalLink'],
-      videoLink: firestore['videoLink'],
-      pic: firestore['picture']);
+  Investor.fromSnapshot(DocumentSnapshot snapshot)
+      : name = snapshot['name'],
+        description = snapshot['description'],
+        personalLink = snapshot['personalLink'],
+        videoLink = snapshot['videoLink'],
+        location = snapshot['location'],
+        pic = snapshot['picture'];
 }
