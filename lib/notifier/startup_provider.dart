@@ -4,10 +4,7 @@ import 'package:fynder/services/database.dart';
 import 'package:fynder/services/fire_auth.dart';
 
 class StartupProvider extends ChangeNotifier {
-  final String? uid;
-
-  StartupProvider({this.uid});
-
+  final databaseService = DatabaseService();
   final authService = FireAuth();
 
   String? _name;
@@ -93,6 +90,6 @@ class StartupProvider extends ChangeNotifier {
         investmentType: _investmentType ?? '',
         location: _location ?? '',
         pic: _pic ?? '');
-    DatabaseService(uid: uid).saveStartupUserDataToFirestore(newStartupProfile);
+    databaseService.saveStartupUserDataToFirestore(newStartupProfile);
   }
 }

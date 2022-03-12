@@ -3,7 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fynder/models/investor.dart';
-import 'package:fynder/notifier/investor_provider.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/services/database.dart';
 import 'package:image_picker/image_picker.dart';
@@ -153,15 +152,15 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                 minWidth: 360,
                 height: 60,
                 onPressed: () {
-                  InvestorProvider investorProvider =
-                      InvestorProvider(uid: _currentUser.uid);
-                  investorProvider.changeDescription = txtDescription.text;
-                  investorProvider.changeVideoLink = txtVideoLink.text;
-                  investorProvider.changePersonalLink =
-                      txtPersonalWebsiteLink.text;
-                  investorProvider.changeLocation = locationValue;
-                  investorProvider.saveInvestorProfile();
-
+                  Investor investor = Investor(
+                      name: txtName.text,
+                      description: txtDescription.text,
+                      videoLink: txtVideoLink.text,
+                      personalLink: txtPersonalWebsiteLink.text,
+                      location: locationValue,
+                      pic: 'investorPic-$investorUID');
+                  DatabaseService(uid: _currentUser.uid)
+                      .saveInvestorUserDataToFirestore(investor);
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => SwipeScreen(user: _currentUser),
