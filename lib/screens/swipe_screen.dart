@@ -19,7 +19,7 @@ class SwipeScreen extends StatefulWidget {
   _SwipeScreenState createState() => _SwipeScreenState();
 }
 
-class _SwipeScreenState extends State<SwipeScreen> {
+class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin {
   late User _currentUser;
   String matchedID = '';
   late var isStartup = true;
@@ -34,6 +34,8 @@ class _SwipeScreenState extends State<SwipeScreen> {
     _currentUser = widget.user;
     super.initState();
   }
+
+  late CardController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -83,32 +85,50 @@ class _SwipeScreenState extends State<SwipeScreen> {
         child: Container(
           height: 700,
             child: TinderSwapCard(
+              cardController: controller = CardController(),
+              swipeUpdateCallback: (DragUpdateDetails details, Alignment align) {
+                if (align.x < 0) {
+                  //Card is LEFT swiping
+                } else if (align.x > 0) {
+                  //Card is RIGHT swiping
+                }
+                // print(itemsTemp.length);
+              },
+              /*swipeCompleteCallback: (CardSwipeOrientation orientation, int index) {
+                /// Get orientation & index of swiped card!
+                if (index == (itemsTemp.length - 1)) {
+                  setState(() {
+                    itemLength = itemsTemp.length - 1;
+                  });
+                }
+              },*/
               totalNum: investorsCards.length,
               maxWidth: MediaQuery.of(context).size.width,
               maxHeight: 700,
               minWidth: MediaQuery.of(context).size.width * 0.75,
-              minHeight: 700,
-              cardBuilder: (context, index) => Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    blurRadius: 5,
-                    spreadRadius: 2),
-                ]),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Stack(
-                    children: [
-                      Container(
-                      width: size.width,
-                      height:600,
-                      child: investorsCards[index],
+              minHeight: 500,
+              cardBuilder: (context, index) =>
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        blurRadius: 5,
+                        spreadRadius: 2),
+                    ]),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Stack(
+                        children: [
+                          Container(
+                          width: size.width,
+                          height:600,
+                          child: investorsCards[index],
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
+                  ),
           ),
         ),
       ),

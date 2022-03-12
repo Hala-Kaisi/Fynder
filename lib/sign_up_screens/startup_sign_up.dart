@@ -171,6 +171,9 @@ class _StartupSignUpState extends State<StartupSignUp> {
                       fontSize: 18),
                 ),
               ),
+              SizedBox(
+                  height: 20,
+              ),
               MaterialButton(
                 minWidth: 360,
                 height: 60,
@@ -203,6 +206,9 @@ class _StartupSignUpState extends State<StartupSignUp> {
                       fontWeight: FontWeight.w600,
                       fontSize: 18),
                 ),
+              ),
+              SizedBox(
+                  height: 20,
               ),
             ],
           ),

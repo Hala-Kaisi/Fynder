@@ -9,7 +9,8 @@ class Storage {
   late final BuildContext context;
 
   Future <String> getURL (String fileName) async {
-    var fileURL = await storage.ref().child(fileName).getDownloadURL();
+    var fileURL = await storage.ref(fileName).getDownloadURL();
+    print(fileURL);
     return fileURL;
   }
 
