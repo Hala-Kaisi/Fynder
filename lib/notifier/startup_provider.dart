@@ -4,7 +4,10 @@ import 'package:fynder/services/database.dart';
 import 'package:fynder/services/fire_auth.dart';
 
 class StartupProvider extends ChangeNotifier {
-  final databaseService = DatabaseService();
+  final String? uid;
+
+  StartupProvider({this.uid});
+
   final authService = FireAuth();
 
   String? _name;
@@ -35,46 +38,46 @@ class StartupProvider extends ChangeNotifier {
 
   String? get pic => _pic;
 
-  set changePic(String value) {
+  set changePic(String? value) {
     _pic = value;
     notifyListeners();
   }
 
-  set changeInvestmentType(String value) {
+  set changeInvestmentType(String? value) {
     _investmentType = value;
     notifyListeners();
   }
 
-  set changeMarketSegment(String value) {
+  set changeMarketSegment(String? value) {
     _marketSegment = value;
     notifyListeners();
   }
 
-  set changeTargetFunds(String value) {
+  set changeTargetFunds(String? value) {
     _targetFunds = value;
     notifyListeners();
   }
 
-  set changeVideoLink(String value) {
+  set changeVideoLink(String? value) {
     _videoLink = value;
     notifyListeners();
   }
 
-  set changePersonalLink(String value) {
+  set changePersonalLink(String? value) {
     _personalLink = value;
     notifyListeners();
   }
 
-  set changeIdeaSummary(String value) {
+  set changeIdeaSummary(String? value) {
     _ideaSummary = value;
     notifyListeners();
   }
 
-  set changeLocation(String value) {
+  set changeLocation(String? value) {
     _location = value;
   }
 
-  set changeName(String value) {
+  set changeName(String? value) {
     _name = value;
     notifyListeners();
   }
@@ -90,6 +93,21 @@ class StartupProvider extends ChangeNotifier {
         investmentType: _investmentType ?? '',
         location: _location ?? '',
         pic: _pic ?? '');
-    databaseService.saveStartupUserDataToFirestore(newStartupProfile);
+    DatabaseService(uid: uid).saveStartupUserDataToFirestore(newStartupProfile);
+  }
+
+  updateStartupProfile() {
+    var startupProfile = Startup (
+        name: _name ?? '',
+        ideaSummary: _ideaSummary ?? '',
+        personalLink: _personalLink ?? '',
+        videoLink: _videoLink ?? '',
+        targetFunds: _targetFunds ?? '',
+        marketSegment: _marketSegment ?? '',
+        investmentType: _investmentType ?? '',
+        location: _location ?? '',
+        pic: _pic ?? ''
+    );
+    DatabaseService(uid: uid).updateStartupUserData(startupProfile);
   }
 }
