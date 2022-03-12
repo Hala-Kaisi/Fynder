@@ -226,6 +226,7 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
         .then((QuerySnapshot querySnapshot) {
             querySnapshot.docs.forEach((doc) {
                 database.swipedRight(doc.id, _currentUser.uid);
+                database.checkMatch(doc.id, _currentUser.uid);
               });
             });
   }
@@ -238,6 +239,7 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         database.swipedRight(doc.id, _currentUser.uid);
+        database.checkMatch(doc.id, _currentUser.uid);
       });
     });
   }
