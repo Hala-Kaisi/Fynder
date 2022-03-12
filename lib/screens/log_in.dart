@@ -6,6 +6,7 @@ import 'package:fynder/screens/reset_password.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/services/fire_auth.dart';
 import 'package:fynder/services/validator.dart';
+import 'package:fynder/screens/reset_password.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -99,8 +100,7 @@ class _LogInState extends State<LogIn> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => ResetScreen())
-                        );
+                            builder: (context) => ResetScreen()));
                       },
                       child: const Text(
                         'Forgot Password',
@@ -172,7 +172,32 @@ class _LogInState extends State<LogIn> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                               ),
                             ],
-                          )
+                          ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: MaterialButton(
+                            onPressed: () async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => ResetScreen()));
+                            },
+                            color: Color(0Xff0095FF),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Text(
+                              'Reset Password',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 18),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 150.0),
+                      ],
+                    ),
                   ],
                 ),
               ),

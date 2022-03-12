@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fynder/models/startup.dart';
+import 'package:fynder/notifier/startup_provider.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/services/database.dart';
 import 'package:image_picker/image_picker.dart';
@@ -175,18 +176,17 @@ class _StartupSignUpState extends State<StartupSignUp> {
                 minWidth: 360,
                 height: 60,
                 onPressed: () {
-                  Startup startup = Startup(
-                      name: txtName.text,
-                      ideaSummary: txtIdeaSummary.text,
-                      personalLink: txtPersonalWebsiteLink.text,
-                      videoLink: txtVideoLink.text,
-                      targetFunds: txtTargetFunds.text,
-                      marketSegment: txtMarketSegment.text,
-                      investmentType: txtInvestmentType.text,
-                      location: locationValue,
-                      pic: 'startupPic-$startupUID');
-                  DatabaseService(uid: _currentUser.uid)
-                      .saveStartupUserDataToFirestore(startup);
+                  StartupProvider startupProvider =
+                      StartupProvider(uid: _currentUser.uid);
+                  startupProvider.changeIdeaSummary = txtIdeaSummary.text;
+                  startupProvider.changePersonalLink =
+                      txtPersonalWebsiteLink.text;
+                  startupProvider.changeVideoLink = txtVideoLink.text;
+                  startupProvider.changeTargetFunds = txtTargetFunds.text;
+                  startupProvider.changeMarketSegment = txtMarketSegment.text;
+                  startupProvider.changeInvestmentType = txtInvestmentType.text;
+                  startupProvider.changeLocation = locationValue;
+                  startupProvider.saveStartupProfile();
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => SwipeScreen(user: _currentUser),
