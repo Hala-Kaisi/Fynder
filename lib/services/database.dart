@@ -72,4 +72,12 @@ class DatabaseService {
   Future<void> saveInvestorUserDataToFirestore(Investor investor) {
     return userCollection.doc(uid).set(investor.toMap());
   }
+
+  Future<void> updateInvestorUserData(Investor investor) {
+    return userCollection.doc(uid).update(investor.toMap());
+  }
+
+  Future<void> updateStartupUserData(Startup startup) {
+    return userCollection.doc(uid).update(startup.toMap());
+  }
 }
