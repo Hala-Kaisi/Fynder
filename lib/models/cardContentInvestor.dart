@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,7 +35,7 @@ class _CardContent extends State<cardContentInvestor> {
   @override
   void initState() {
     _name = widget.name;
-    _asset = widget.asset;
+    _asset = widget.asset.toString();
     _description = widget.description;
     _websiteLink = widget.websiteLink;
     _videoLink = widget.videoLink;
@@ -47,88 +48,90 @@ class _CardContent extends State<cardContentInvestor> {
     Widget titleSection = Container(
       padding: const EdgeInsets.all(32),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(
-                    '$_name',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
+          Container(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(
+              '$_name',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
       ),
     );
 
+
     Color color = Theme.of(context).primaryColor;
 
     Widget infoSection = Row(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildColumn(color, Icons.location_on_sharp, '$_location'),
-        _buildButtonColumn(color, Icons.videocam, 'Personal Video', _videoLink),
-        _buildButtonColumn(color, Image.asset('website.png') as IconData, 'Website', _websiteLink),
+        _buildButtonColumn(color, Icons.videocam, 'Personal Video', _websiteLink),
+        _buildButtonColumn(color, Icons.web, 'Website', _videoLink),
       ],
     );
 
-    Widget textSection = Padding(
-      padding: EdgeInsets.all(32),
-      child: Text(
-        '$_description',
-        softWrap: true,
+    Widget textSection = SizedBox (
+      height: 200,
+      child: Padding(
+        padding: EdgeInsets.all(32),
+        child: Text(
+          '$_description',
+          softWrap: true,
+        ),
       ),
     );
 
-    return MaterialApp(
-      home: Scaffold(
-        body: ListView(
-          children: [
-            Image(
-              image: NetworkImage(_asset),
-              width: 600,
-              height: 240,
-              fit: BoxFit.cover,
-            ),
-            titleSection,
-            infoSection,
-            textSection,
-          ],
+    return  Card(
+        shadowColor: Colors.black,
+        elevation: 15,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
         ),
+        child:ListView(
+          shrinkWrap: true,
+        children: [
+          Image(
+            image: NetworkImage('http://$_asset'),
+            width: 380,
+            height: 100,
+            fit: BoxFit.fitWidth,
+          ),
+          titleSection,
+          SizedBox(height: 5),
+          infoSection,
+          SizedBox(height: 10),
+          textSection,
+        ],
       ),
     );
   }
 
-  ElevatedButton _buildButtonColumn(Color color, IconData icon, String label, String link) {
-    return
-      ElevatedButton(
-        onPressed: openLink(link),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: color),
-            Container(
-              margin: const EdgeInsets.only(top: 8),
-              child: Text(
-                label,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: color,
-                ),
-              ),
-            ),
-          ],
+  Column _buildButtonColumn(Color color, IconData icon, String label, String link) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        IconButton(
+            onPressed: (){openLink(link);},
+            icon: Icon(icon, color: color)
         ),
-      );
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+            color: color,
+          ),
+        ),
+      ],
+    );
   }
 
   openLink(String link) async {

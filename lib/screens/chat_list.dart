@@ -54,9 +54,10 @@ class _chatList extends State<chatList> {
                     .collection('chats')
                     .snapshots(),
                 builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
-                  if(!snapshot.hasData)
+                  if(!snapshot.hasData) {
                     return new Text('You have no chatrooms open.'
                         , textAlign: TextAlign.center);
+                  }
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
                       return CircularProgressIndicator();

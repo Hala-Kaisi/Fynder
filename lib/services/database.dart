@@ -13,11 +13,12 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('userlist');
 
   Future createUser(String name) async {
-    await userCollection.doc(uid).collection('matchList');
-    await userCollection.doc(uid).collection('chats');
-    userCollection.doc(uid).collection('swipedRight');
-    userCollection.doc(uid).collection('swipedLeft');
-    return userCollection.doc(uid);
+    return {
+    userCollection.doc(uid),
+    userCollection.doc(uid).collection('matchList').doc('test'),
+    userCollection.doc(uid).collection('chats').doc('test'),
+    userCollection.doc(uid).collection('swipedRight').doc('test'),
+    };
   }
 
   Future<bool> swipedRight(String matchedID) async {

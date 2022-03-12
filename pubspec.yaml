@@ -51,6 +51,8 @@ dependencies:
   page_transition: ^2.0.4
   url_launcher: ^6.0.20
   swipable_stack: ^1.2.0
+  swipe: ^0.0.1
+  flutter_swipecards: ^0.2.1
 
 dev_dependencies:
   flutter_test:

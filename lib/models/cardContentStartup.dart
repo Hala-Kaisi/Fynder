@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class cardContentStartup extends StatefulWidget {
-  const cardContentStartup({
+  cardContentStartup({
     required this.name,
     required this.asset,
     required this.description,
@@ -15,7 +16,7 @@ class cardContentStartup extends StatefulWidget {
   });
 
   final String name;
-  final String asset;
+  var asset;
   final String description;
   final String websiteLink;
   final String videoLink;
@@ -24,6 +25,7 @@ class cardContentStartup extends StatefulWidget {
   final String marketSegment;
   final String targetFunds;
 
+
   @override
   _CardContent createState() => _CardContent();
 }
@@ -31,7 +33,7 @@ class cardContentStartup extends StatefulWidget {
 class _CardContent extends State<cardContentStartup> {
 
   late String _name;
-  late String _asset;
+  late var _asset;
   late String _description;
   late String _websiteLink;
   late String _videoLink;
@@ -43,7 +45,7 @@ class _CardContent extends State<cardContentStartup> {
   @override
   void initState() {
     _name = widget.name;
-    _asset = widget.asset;
+    _asset = widget.asset.toString();
     _description = widget.description;
     _websiteLink = widget.websiteLink;
     _videoLink = widget.videoLink;
@@ -57,25 +59,21 @@ class _CardContent extends State<cardContentStartup> {
   @override
   Widget build(BuildContext context) {
     Widget titleSection = Container(
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.all(25),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              //crossAxisAlignment: CrossAxisAlignment.start,
                 Container(
-                  padding: const EdgeInsets.only(bottom: 8),
+                  //padding: const EdgeInsets.only(bottom: 0),
                   child: Text(
-                    '$_name',
-                    style: TextStyle(
+                    _name,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -83,73 +81,80 @@ class _CardContent extends State<cardContentStartup> {
     Color color = Theme.of(context).primaryColor;
 
     Widget infoSection = Row(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildColumn(color, Icons.location_on_sharp, '$_location'),
-        _buildColumn(color, Image.asset('investmentType.png') as IconData, '$_investmentType'),
-        _buildColumn(color, Icons.business, '$_marketSegment'),
+        _buildColumn(color, Icons.location_on_sharp, _location),
+        _buildColumn(color, Icons.money, _investmentType),
+        _buildColumn(color, Icons.business, _marketSegment),
       ],
     );
     Widget infoSection2 = Row(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildColumn(color, Icons.attach_money, '$_targetFunds'),
-        _buildButtonColumn(color, Icons.videocam, 'Personal Video', _videoLink),
-        _buildButtonColumn(color, Image.asset('website.png') as IconData, 'Website', _websiteLink),
+        _buildColumn(color, Icons.attach_money, _targetFunds),
+        _buildButtonColumn(color, Icons.videocam, 'Personal Video', _websiteLink),
+        _buildButtonColumn(color, Icons.web, 'Website', _videoLink),
       ],
     );
-
-    Widget textSection = Padding(
-      padding: EdgeInsets.all(32),
-      child: Text(
-        '$_description',
-        softWrap: true,
-      ),
-    );
-
-    return MaterialApp(
-      home: Scaffold(
-        body: ListView(
-          children: [
-            Image(
-              image: NetworkImage(_asset),
-              width: 600,
-              height: 240,
-              fit: BoxFit.cover,
-            ),
-            titleSection,
-            infoSection,
-            infoSection2,
-            textSection,
-          ],
+    Widget textSection = SizedBox(
+        height: 200,
+        child: Padding(
+          padding: const EdgeInsets.all(25),
+          child: Text(
+            _description,
+            softWrap: true,
+          ),
         ),
-      ),
     );
+
+    return
+        Card(
+          shadowColor: Colors.black,
+          elevation: 12,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child:ListView(
+            shrinkWrap: true,
+            children: [
+              SizedBox(
+                child: Image.network('$_asset'),
+                width: 380,
+                height: 100,
+              ),
+              titleSection,
+              SizedBox(height: 5),
+              infoSection,
+              SizedBox(height: 20),
+              infoSection2,
+              SizedBox(height: 10),
+              textSection,
+            ],
+          ),
+        );
   }
 
-  ElevatedButton _buildButtonColumn(Color color, IconData icon, String label, String link) {
-    return
-      ElevatedButton(
-          onPressed: openLink(link),
-          child: Column(
+  Column _buildButtonColumn(Color color, IconData icon, String label, String link) {
+    return Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color),
-              Container(
-                margin: const EdgeInsets.only(top: 8),
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: color,
-                  ),
+            children: <Widget>[
+              IconButton(
+                onPressed: (){openLink(link);},
+                icon: Icon(icon, color: color)
+              ),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: color,
                 ),
               ),
             ],
-          ),
-      );
+          );
   }
 
   openLink(String link) async {

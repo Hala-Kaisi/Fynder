@@ -50,13 +50,13 @@ class _chatList_item extends State<chatList_item> {
     final lastMessage = getlastMessage();
     final lastTimeStamp = getTimeStamp();
     Storage storage = Storage();
-    String profileURL = storage.getURL(_chatUser.uid) as String;
+    //String profileURL = storage.getURL(_chatUser.uid) as String;
     // TODO: implement build
     return ListTile(
-      leading: CircleAvatar(
+      /*leading: CircleAvatar(
         radius: 30,
         backgroundImage: NetworkImage(profileURL),
-      ),
+      ),*/
       title: Text(_chatUser.displayName!, style: TextStyle( //change data from database for all
         fontSize: 16,
         fontWeight: FontWeight.bold,
