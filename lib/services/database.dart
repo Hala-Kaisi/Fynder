@@ -21,15 +21,44 @@ class DatabaseService {
     };
   }
 
-  Future<bool> swipedRight(String matchedID) async {
-    userCollection.doc(uid).collection('swipedRight').doc(matchedID);
-    var matched = await userCollection.doc(matchedID).collection('swipedRight')
-        .doc(uid).get();
-    if(matched.exists){
-      userCollection.doc(uid).collection('matchList').doc(matchedID);
-      return true;
+  swipedRight(String matchedID, String ID) async {
+    return {
+      userCollection.doc(ID).collection('swipedRight').doc(matchedID).set({
+      'userID': matchedID}),
+    };
+  }
+
+  checkMatch(String matchedID, String ID) async {
+    QuerySnapshot<Map<String, dynamic>> getSwipedRightList =await userCollection
+          .doc(matchedID)
+          .collection('swipedRight')
+          .get();
+    for(int i = 0; i < getSwipedRightList.docs.length; i++){
+      if(getSwipedRightList.docs[i].exists){
+        if(getSwipedRightList.docs[i].id == ID){
+          return {
+            userCollection.doc(ID).collection('matchList').doc(matchedID). set ({
+            'userID': matchedID
+            }),
+            userCollection.doc(matchedID).collection('matchList').doc(ID). set ({
+              'userID': ID
+            }),
+          };
+        }
+      }
     }
-    return false;
+  }
+
+  isSwipedRight(String cardID, String ID) async{
+    QuerySnapshot<Map<String, dynamic>> getSwipedRightList = await userCollection
+        .doc(ID)
+        .collection('swipedRight')
+        .get();
+    for(int i = 0; i < getSwipedRightList.docs.length; i++){
+      if(getSwipedRightList.docs[i].exists){
+          return getSwipedRightList.docs[i].id == cardID;
+      }
+    }
   }
 
   Future<void> swipedLeft(String unmatchedID) async {

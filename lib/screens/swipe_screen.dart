@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fynder/services/database.dart';
 import 'package:fynder/services/storage.dart';
@@ -79,6 +80,7 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
 
   Widget createStack() {
     var size = MediaQuery.of(context).size;
+    var currentIndex = 0;
     if(isStartup){
     return Padding(
         padding: const EdgeInsets.only(top: 0),
@@ -88,20 +90,16 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
               cardController: controller = CardController(),
               swipeUpdateCallback: (DragUpdateDetails details, Alignment align) {
                 if (align.x < 0) {
-                  //Card is LEFT swiping
                 } else if (align.x > 0) {
-                  //Card is RIGHT swiping
+                  investorSwipedRight(investorsCards[currentIndex]);
                 }
                 // print(itemsTemp.length);
               },
-              /*swipeCompleteCallback: (CardSwipeOrientation orientation, int index) {
-                /// Get orientation & index of swiped card!
-                if (index == (itemsTemp.length - 1)) {
-                  setState(() {
-                    itemLength = itemsTemp.length - 1;
-                  });
-                }
-              },*/
+              swipeCompleteCallback: (CardSwipeOrientation orientation, int index) {
+                currentIndex = index;
+              },
+              swipeDown: false,
+              swipeUp: false,
               totalNum: investorsCards.length,
               maxWidth: MediaQuery.of(context).size.width,
               maxHeight: 700,
@@ -139,6 +137,16 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
       child: Container(
         height: 700,
         child: TinderSwapCard(
+          cardController: controller = CardController(),
+          swipeUpdateCallback: (DragUpdateDetails details, Alignment align) {
+            if (align.x < 0) {
+            } else if (align.x > 0) {
+              startupSwipedRight(startupsCards[currentIndex]);
+            }
+          },
+          swipeCompleteCallback: (CardSwipeOrientation orientation, int index) {
+            currentIndex = index;
+          },
           swipeDown: false,
           swipeUp: false,
           totalNum: startupsCards.length,
@@ -177,7 +185,7 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
   getInvestorCards(Storage storage, List<DocumentSnapshot> documents){
     for(int i = 0; i<documents.length; i++){
       DocumentSnapshot doc = documents[i];
-      if (doc['startup'] == false) {
+      if (doc['startup'] == false && database.isSwipedRight(doc.id, _currentUser.uid).toString() == "false") {
         investorsCards.add(
             cardContentInvestor(
                 name: doc['name'],
@@ -188,12 +196,13 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
                 location: doc['location']));
       }
     }
+    print(investorsCards);
   }
 
   getStartupsCards(Storage storage, List<DocumentSnapshot> documents){
     for(int i = 0; i<documents.length; i++){
       DocumentSnapshot doc = documents[i];
-      if (doc['startup'] == true) {
+      if (doc['startup'] == true && database.isSwipedRight(doc.id, _currentUser.uid).toString() == "false") {
         startupsCards.add( cardContentStartup(
             name: doc['name'],
             asset: storage.getURL(doc['picture']),
@@ -206,6 +215,31 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
             targetFunds: doc['targetFunds']));
       }
     }
+    print(startupsCards);
+  }
+
+  investorSwipedRight(cardContentInvestor investor){
+    String investorName = investor.getName();
+    FirebaseFirestore.instance
+        .collection('userlist')
+        .where('name', isEqualTo: investorName).get()
+        .then((QuerySnapshot querySnapshot) {
+            querySnapshot.docs.forEach((doc) {
+                database.swipedRight(doc.id, _currentUser.uid);
+              });
+            });
+  }
+
+  startupSwipedRight(cardContentStartup startup){
+    String startupName = startup.getName();
+    FirebaseFirestore.instance
+        .collection('userlist')
+        .where('name', isEqualTo: startupName).get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        database.swipedRight(doc.id, _currentUser.uid);
+      });
+    });
   }
 
 }

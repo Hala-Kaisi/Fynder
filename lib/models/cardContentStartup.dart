@@ -25,6 +25,10 @@ class cardContentStartup extends StatefulWidget {
   final String marketSegment;
   final String targetFunds;
 
+  String getName(){
+    return name;
+  }
+
 
   @override
   _CardContent createState() => _CardContent();

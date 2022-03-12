@@ -19,6 +19,10 @@ class cardContentInvestor extends StatefulWidget {
   final String videoLink;
   final String location;
 
+  String getName(){
+    return name;
+  }
+
   @override
   _CardContent createState() => _CardContent();
 }
