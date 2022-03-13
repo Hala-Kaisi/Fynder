@@ -68,12 +68,14 @@ class _chatList_item extends State<chatList_itemInvestor> {
         children: [
           SizedBox(width: 3,
           ),
-          Text(
-            '$lastMessage',
-            style: TextStyle(
-                fontSize: 13
+          Flexible(child: Container(
+            child :Text(
+              '$lastMessage',
+              style: TextStyle(
+                  fontSize: 13
+              ),
             ),
-          ),
+          ),),
         ],
       ),
       trailing: Text("$lastTimeStamp"),
