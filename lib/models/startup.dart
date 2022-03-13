@@ -10,6 +10,7 @@ class Startup {
   final String investmentType;
   final String? location;
   final String pic;
+  final String id;
 
   Startup(
       {required this.name,
@@ -20,7 +21,8 @@ class Startup {
       required this.marketSegment,
       required this.investmentType,
       required this.location,
-      required this.pic});
+      required this.pic,
+      required this.id});
 
   // send data to Firestore
   Map<String, dynamic> toMap() {
@@ -35,10 +37,14 @@ class Startup {
       'name': name,
       'location': location,
       'investor': false,
-      'startup': true
+      'startup': true,
+      'id' : id,
     };
   }
 
+  getName(){
+    return name;
+  }
   // retrieve data from firestore
   Startup.fromSnapshot(DocumentSnapshot snapshot)
       : name = snapshot['name'],
@@ -49,5 +55,6 @@ class Startup {
         marketSegment = snapshot['marketSegment'],
         investmentType = snapshot['investmentType'],
         location = snapshot['location'],
-        pic = snapshot['picture'];
+        pic = snapshot['picture'],
+        id = snapshot['id'];
 }

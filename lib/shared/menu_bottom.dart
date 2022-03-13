@@ -2,10 +2,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fynder/screens/chat_list.dart';
-import 'package:fynder/screens/chat_screen.dart';
+import 'package:fynder/screens/chat_list_startups.dart';
+import 'package:fynder/screens/chat_startupUser.dart';
 import 'package:fynder/screens/news_section.dart';
 import 'package:fynder/screens/swipe_screen.dart';
+
+import '../screens/chat_list_investors.dart';
 
 class MenuBottom extends StatefulWidget {
   final User user;
@@ -36,8 +38,16 @@ class _MenuBottomState extends State<MenuBottom> {
               MaterialPageRoute(builder: (_) => SwipeScreen(user: _currentUser)));
           break;
         case 1:
-          Navigator.push(context,
-              MaterialPageRoute(builder: (_) => chatList(user: _currentUser)));
+          if(_currentUser.displayName == "startup") {
+            Navigator.push(context,
+                MaterialPageRoute(
+                    builder: (_) => chatListInvestors(user: _currentUser)));
+          }
+          else{
+            Navigator.push(context,
+                MaterialPageRoute(
+                    builder: (_) => chatListStartups(user: _currentUser)));
+          }
           break;
         case 2:
           Navigator.push(context,

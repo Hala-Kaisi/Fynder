@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fynder/models/investor.dart';
+import 'package:fynder/models/startup.dart';
 import 'package:fynder/services/database.dart';
 import 'package:fynder/services/storage.dart';
 import 'package:fynder/shared/actions_menu.dart';
@@ -29,6 +31,8 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
   List<dynamic> startupsCards = [];
   DatabaseService database = DatabaseService();
   late var userlist = FirebaseFirestore.instance.collection('userslist').get();
+  late Startup _currentUserTypeStartup;
+  late Investor _currentUserTypeInvestor;
 
   @override
   void initState() {
@@ -64,15 +68,30 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection("userlist").snapshots(),
       builder: (context, snapshot) {
+        if(!snapshot.hasData){
+          return Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/WellDone!.png'),
+              ),
+            ),
+          );
+        }
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return const CircularProgressIndicator();
           default:
             QuerySnapshot snap = snapshot.data as QuerySnapshot<Object?>;
             List<DocumentSnapshot> documents = snap.docs;
-            getInvestorCards(storage, documents);
-            getStartupsCards(storage, documents);
-            return createStack();
+            if(_currentUser.displayName != "startup"){
+              isStartup = false;
+              getStartupsCards(storage, documents);
+              return createStack();
+            }
+            else {
+              getInvestorCards(storage, documents);
+              return createStack();
+            }
             }
         }
       );
@@ -132,60 +151,70 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
       ),
     );
   }
-    return Padding(
-      padding: const EdgeInsets.only(top:5),
-      child: Container(
-        height: 700,
-        child: TinderSwapCard(
-          cardController: controller = CardController(),
-          swipeUpdateCallback: (DragUpdateDetails details, Alignment align) {
-            if (align.x < 0) {
-            } else if (align.x > 0) {
-              startupSwipedRight(startupsCards[currentIndex]);
-            }
-          },
-          swipeCompleteCallback: (CardSwipeOrientation orientation, int index) {
-            currentIndex = index;
-          },
-          swipeDown: false,
-          swipeUp: false,
-          totalNum: startupsCards.length,
-          maxWidth: MediaQuery.of(context).size.width,
-          maxHeight: 700,
-          minWidth: MediaQuery.of(context).size.width * 0.75,
-          minHeight: 500,
-          cardBuilder: (context, index) => Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                blurRadius: 5,
-                spreadRadius: 2),
-            ]),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Stack(
-                children: [
-                  Container(
-                  width: size.width,
-                  height: 600,
-                  child: startupsCards[index],
+    else {
+      return Padding(
+        padding: const EdgeInsets.only(top: 5),
+        child: Container(
+          height: 700,
+          child: TinderSwapCard(
+            cardController: controller = CardController(),
+            swipeUpdateCallback: (DragUpdateDetails details, Alignment align) {
+              if (align.x < 0) {} else if (align.x > 0) {
+                startupSwipedRight(startupsCards[currentIndex]);
+              }
+            },
+            swipeCompleteCallback: (CardSwipeOrientation orientation,
+                int index) {
+              currentIndex = index;
+            },
+            swipeDown: false,
+            swipeUp: false,
+            totalNum: startupsCards.length,
+            maxWidth: MediaQuery
+                .of(context)
+                .size
+                .width,
+            maxHeight: 700,
+            minWidth: MediaQuery
+                .of(context)
+                .size
+                .width * 0.75,
+            minHeight: 500,
+            cardBuilder: (context, index) =>
+                Container(
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          blurRadius: 5,
+                          spreadRadius: 2),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: size.width,
+                          height: 600,
+                          child: startupsCards[index],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
           ),
         ),
-      ),
-    );
-
+      );
+    }
   }
 
   getInvestorCards(Storage storage, List<DocumentSnapshot> documents){
     for(int i = 0; i<documents.length; i++){
       DocumentSnapshot doc = documents[i];
-      if (doc['startup'] == false && database.isSwipedRight(doc.id, _currentUser.uid).toString() == "false") {
+      if (doc['startup'] == false && database.isSwipedRight(doc.id, _currentUser.uid) == false) {
         investorsCards.add(
             cardContentInvestor(
                 name: doc['name'],
@@ -196,14 +225,17 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
                 location: doc['location']));
       }
     }
-    print(investorsCards);
+    if(investorsCards.isEmpty){
+      investorsCards.add(emptyDatabase());
+    }
   }
 
-  getStartupsCards(Storage storage, List<DocumentSnapshot> documents){
-    for(int i = 0; i<documents.length; i++){
+  getStartupsCards(Storage storage, List<DocumentSnapshot> documents) {
+    for (int i = 0; i < documents.length; i++) {
       DocumentSnapshot doc = documents[i];
-      if (doc['startup'] == true && database.isSwipedRight(doc.id, _currentUser.uid).toString() == "false") {
-        startupsCards.add( cardContentStartup(
+      if (doc['startup'] == true &&
+          database.isSwipedRight(doc.id, _currentUser.uid) == false) {
+        startupsCards.add(cardContentStartup(
             name: doc['name'],
             asset: storage.getURL(doc['picture']),
             description: doc['ideaSummary'],
@@ -215,7 +247,9 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
             targetFunds: doc['targetFunds']));
       }
     }
-    print(startupsCards);
+    if (startupsCards.isEmpty) {
+      startupsCards.add(emptyDatabase());
+    }
   }
 
   investorSwipedRight(cardContentInvestor investor){
@@ -226,7 +260,7 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
         .then((QuerySnapshot querySnapshot) {
             querySnapshot.docs.forEach((doc) {
                 database.swipedRight(doc.id, _currentUser.uid);
-                database.checkMatch(doc.id, _currentUser.uid);
+                database.checkMatch(doc.id, _currentUser.uid, doc['name'], _currentUserTypeStartup.name);
               });
             });
   }
@@ -239,8 +273,31 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         database.swipedRight(doc.id, _currentUser.uid);
-        database.checkMatch(doc.id, _currentUser.uid);
+        database.checkMatch(doc.id, _currentUser.uid, doc['name'], _currentUserTypeInvestor.name);
       });
+    });
+  }
+
+  emptyDatabase(){
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/WellDone!.png'),
+          fit: BoxFit.fitWidth
+        ),
+      ),
+    );
+  }
+
+  getCurrentUserType(){
+    return FirebaseFirestore.instance.collection('userlist')
+        .doc(_currentUser.uid).get().then((DocumentSnapshot documentSnapshot) => {
+          if(isStartup){
+            _currentUserTypeStartup = Startup.fromSnapshot(documentSnapshot)
+          }
+          else{
+            _currentUserTypeInvestor = Investor.fromSnapshot(documentSnapshot)
+          }
     });
   }
 

@@ -161,7 +161,8 @@ class _InvestorSignUpState extends State<InvestorSignUp> {
                       videoLink: txtVideoLink.text,
                       personalLink: txtPersonalWebsiteLink.text,
                       location: locationValue,
-                      pic: 'investorPic-$investorUID');
+                      pic: 'investorPic-$investorUID',
+                      id: _currentUser.uid);
                   DatabaseService(uid: _currentUser.uid)
                       .saveInvestorUserDataToFirestore(investor);
                   Navigator.of(context).pushReplacement(

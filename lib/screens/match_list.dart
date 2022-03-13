@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fynder/screens/chat_list.dart';
+import 'package:fynder/screens/chat_InvestorUser.dart';
+import 'package:fynder/screens/chat_list_startups.dart';
 import 'package:fynder/shared/actions_menu.dart';
 import 'package:fynder/shared/menu_drawer.dart';
 import 'package:fynder/shared/menu_bottom.dart';
 import 'package:fynder/models/matchList_item.dart';
-import 'package:fynder/screens/chat_screen.dart';
+import 'package:fynder/screens/chat_startupUser.dart';
+import '../models/investor.dart';
+import '../models/startup.dart';
+import 'chat_list_investors.dart';
 
 
 class matchList extends StatefulWidget {
@@ -21,6 +25,10 @@ class matchList extends StatefulWidget {
 class _matchList extends State<matchList> {
 
   late User _currentUser;
+  late Startup _currentUserStartup;
+  late Startup _chatUserStartup;
+  late Investor _currentUserInvestor;
+  late Investor _chatUserInvestor;
 
   @override
   void initState() {
@@ -35,13 +43,23 @@ class _matchList extends State<matchList> {
         title:
         Text('New Chat'),
         actions: <Widget>[ActionsMenu(user: _currentUser)],
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => chatList(user: _currentUser)),
-            );
+            if(_currentUser.displayName == "startup") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => chatListInvestors(user: _currentUser)),
+              );
+            }
+            else{
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => chatListStartups(user: _currentUser)),
+              );
+            }
           },
         ),
       ),
@@ -53,39 +71,78 @@ class _matchList extends State<matchList> {
                   .collection('matchList')
                   .snapshots(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot){
-            if(!snapshot.hasData)
-              return new Text('You have not been matched with anyone yet to start a conversation.'
-              , textAlign: TextAlign.center);
+            if(!snapshot.hasData) {
+              return Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/NoMatches.png'),
+                  ),
+                ),
+              );
+            }
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
                 return CircularProgressIndicator();
               default:
                   return ListView.builder(
+                    padding: EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 10),
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (BuildContext ctxt, int index) {
-                        User chatUser = snapshot.data.docs[index];
-                        String chatUserName = chatUser.displayName!;
-                        String userName = _currentUser.displayName!;
+                        QuerySnapshot snap = snapshot.data as QuerySnapshot<Object?>;
+                        List<DocumentSnapshot> documents = snap.docs;
+                        DocumentSnapshot doc = documents[index];
+                        String chatUserName = doc['name'];
                         return ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 primary: Colors.white
                             ),
-                            onPressed: () {
-                              FirebaseFirestore.instance
-                                .collection('userlist')
-                                .doc(_currentUser.uid)
-                                .collection('chats')
-                                .doc(chatUser.uid);
-                              FirebaseFirestore.instance
-                                .collection('chats')
-                                .doc('$chatUserName+$userName');
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) =>
-                                    ChatScreen(user: _currentUser, chatUser: chatUser)),
-                              );
+                            onPressed: () async {
+                              if(_currentUser.displayName == 'startup'){
+                                await getUser(true);
+                                await getChatUser(true, doc.id);
+                                await FirebaseFirestore.instance
+                                    .collection('userlist')
+                                    .doc(_currentUserStartup.id)
+                                    .collection('chats')
+                                    .doc("${_currentUserStartup.name}+${_chatUserInvestor.name}").set({});
+                                await FirebaseFirestore.instance
+                                    .collection('userlist')
+                                    .doc(_chatUserInvestor.id)
+                                    .collection('chats')
+                                    .doc("${_currentUserStartup.name}+${_chatUserInvestor.name}").set({});
+                                FirebaseFirestore.instance
+                                    .collection('chats')
+                                    .doc('${_currentUserStartup.name}+${_chatUserInvestor.name}');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      ChatScreenInvestor(user: _currentUserStartup, chatUser: _chatUserInvestor)),
+                                );
+                              }
+                              else{
+                                await getUser(false);
+                                await getChatUser(false, doc.id);
+                                await FirebaseFirestore.instance
+                                    .collection('userlist')
+                                    .doc(_currentUserInvestor.id)
+                                    .collection('chats')
+                                    .doc("${_chatUserStartup.name}+${_currentUserInvestor.name}").set({});
+                                await FirebaseFirestore.instance
+                                    .collection('userlist')
+                                    .doc(_chatUserStartup.id)
+                                    .collection('chats')
+                                    .doc("${_chatUserStartup.name}+${_currentUserInvestor.name}").set({});
+                                FirebaseFirestore.instance
+                                    .collection('chats')
+                                    .doc('${_chatUserStartup.name}+${_currentUserInvestor.name}');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      ChatScreenStartup(user: _currentUserInvestor, chatUser: _chatUserStartup)),
+                                );
+                              }
                             },
-                            child: matchList_item(user: chatUser)
+                            child: matchList_item(matchName: chatUserName)
                         );
                       }
                   );
@@ -93,6 +150,33 @@ class _matchList extends State<matchList> {
           },
       ),
     );
+  }
+  getUser(bool isStartup) {
+    return
+      FirebaseFirestore.instance.collection('userlist')
+          .doc(_currentUser.uid).get().then((
+          DocumentSnapshot documentSnapshot) {
+        if (isStartup) {
+          _currentUserStartup = Startup.fromSnapshot(documentSnapshot);
+          print(_currentUserStartup.name);
+        }
+        else {
+          _currentUserInvestor = Investor.fromSnapshot(documentSnapshot);
+        }
+      });
+  }
+
+  getChatUser(bool isStartup, String chatUserID){
+    return FirebaseFirestore.instance.collection('userlist')
+        .doc(chatUserID). get ().then((DocumentSnapshot documentSnapshot) {
+          if(isStartup){
+            _chatUserInvestor = Investor.fromSnapshot(documentSnapshot);
+            print(_chatUserInvestor.name);
+          }
+          else{
+            _chatUserStartup = Startup.fromSnapshot(documentSnapshot);
+          }
+        });
   }
 }
 
