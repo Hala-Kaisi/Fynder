@@ -187,7 +187,8 @@ class _StartupSignUpState extends State<StartupSignUp> {
                       marketSegment: txtMarketSegment.text,
                       investmentType: txtInvestmentType.text,
                       location: locationValue,
-                      pic: 'startupPic-$startupUID');
+                      pic: 'startupPic-$startupUID',
+                      id: _currentUser.uid);
                   DatabaseService(uid: _currentUser.uid)
                       .saveStartupUserDataToFirestore(startup);
                   Navigator.of(context).pushReplacement(

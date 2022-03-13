@@ -15,9 +15,7 @@ class DatabaseService {
   Future createUser(String name) async {
     return {
     userCollection.doc(uid),
-    userCollection.doc(uid).collection('matchList').doc('test'),
-    userCollection.doc(uid).collection('chats').doc('test'),
-    userCollection.doc(uid).collection('swipedRight').doc('test'),
+    userCollection.doc(uid).collection('chats').doc('test')
     };
   }
 
@@ -28,7 +26,7 @@ class DatabaseService {
     };
   }
 
-  checkMatch(String matchedID, String ID) async {
+  checkMatch(String matchedID, String ID, String matchedName, String name) async {
     QuerySnapshot<Map<String, dynamic>> getSwipedRightList =await userCollection
           .doc(matchedID)
           .collection('swipedRight')
@@ -38,10 +36,12 @@ class DatabaseService {
         if(getSwipedRightList.docs[i].id == ID){
           return {
             userCollection.doc(ID).collection('matchList').doc(matchedID). set ({
-            'userID': matchedID
+            'userID': matchedID,
+              'name' : matchedName
             }),
             userCollection.doc(matchedID).collection('matchList').doc(ID). set ({
-              'userID': ID
+              'userID': ID,
+              'name' : name
             }),
           };
         }
@@ -54,9 +54,16 @@ class DatabaseService {
         .doc(ID)
         .collection('swipedRight')
         .get();
+    if(getSwipedRightList.size == 0){
+      return false;
+    }
     for(int i = 0; i < getSwipedRightList.docs.length; i++){
       if(getSwipedRightList.docs[i].exists){
-          return getSwipedRightList.docs[i].id == cardID;
+        print(getSwipedRightList.docs[i].id);
+        print(ID);
+        bool s = getSwipedRightList.docs[i].id == cardID;
+        print(s);
+          return s;
       }
     }
   }

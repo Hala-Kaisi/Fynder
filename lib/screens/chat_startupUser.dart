@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fynder/models/investor.dart';
 import 'package:fynder/services/storage.dart';
 import 'package:fynder/shared/actions_menu.dart';
 import 'package:fynder/shared/menu_drawer.dart';
@@ -10,33 +11,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter/services.dart';
+import '../models/startup.dart';
 
 final _firestore = FirebaseFirestore.instance;
-User? loggedInuser;
-User? chatUser;
+Investor? loggedInuser;
+Startup? chatUser;
 final focusNode = FocusNode();
 String? chatRoomID;
 String? userName;
+String? chatUserName;
 
-class ChatScreen extends StatefulWidget {
-  User user;
-  User chatUser;
+class ChatScreenStartup extends StatefulWidget {
+  Investor user;
+  Startup chatUser;
 
-  ChatScreen({required this.user, required this.chatUser});
+  ChatScreenStartup({required this.user, required this.chatUser});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreenStartup> {
   final controller = TextEditingController();
   final _auth = FirebaseAuth.instance;
   bool isEmojiVisible = false;
   bool isKeyboardVisible = false;
   var messageText;
-  late User user;
-  late User chatUser;
-  late String chatUserName;
+  late Investor user;
+  late Startup chatUser;
 
   @override
   void initState() {
@@ -44,7 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
     this.user = widget.user;
     this.chatUser = widget.chatUser;
     loggedInuser = widget.user;
-    chatRoomID = '$chatUser+$user';
+    chatRoomID = '${chatUser.name}+${user.name}';
     var keyboardVisibilityController = KeyboardVisibilityController();
     keyboardVisibilityController.onChange.listen((bool isKeyboardVisible) {
       setState(() {
@@ -91,7 +93,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    chatUserName = this.chatUser.displayName!;
+    chatUserName = chatUser.name;
     Widget buildSticker() {
       return EmojiPicker(
         onEmojiSelected: (emoji, category) {
@@ -122,19 +124,19 @@ class _ChatScreenState extends State<ChatScreen> {
               Container(
                 width: double.infinity,
                 height: 50.0,
-                decoration: new BoxDecoration(
-                    border: new Border(
+                decoration: const BoxDecoration(
+                    border: Border(
                         top:
-                        new BorderSide(color: Colors.blueGrey, width: 0.5)),
+                        BorderSide(color: Colors.blueGrey, width: 0.5)),
                     color: Colors.white),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Material(
-                      child: new Container(
-                        margin: new EdgeInsets.symmetric(horizontal: 1.0),
-                        child: new IconButton(
-                          icon: new Icon(isEmojiVisible
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 1.0),
+                        child: IconButton(
+                          icon: Icon(isEmojiVisible
                               ? Icons.keyboard_rounded
                               : Icons.emoji_emotions),
                           onPressed: onClickedEmoji,
@@ -152,7 +154,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           onSubmitted: (value) {
                             controller.clear();
                             _firestore.collection('chats').doc(chatRoomID).collection('messages').add({
-                              'sender': user.displayName,
+                              'sender': user.name,
                               'text': messageText,
                               'timestamp': Timestamp.now(),
                             });
@@ -179,7 +181,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           onPressed: () {
                             controller.clear();
                             _firestore.collection('chats').doc(chatRoomID).collection('messages').add({
-                              'sender': user.displayName,
+                              'sender': user.name,
                               'text': messageText,
                               'timestamp': Timestamp.now(),
                             });
@@ -241,7 +243,7 @@ class MessagesStream extends StatelessWidget {
             sender: messageSender,
             text: messageText,
             timestamp: timeStamp,
-            isMe: currentUser == messageSender,
+            isMe: currentUser?.name == messageSender,
           );
         }).toList();
 

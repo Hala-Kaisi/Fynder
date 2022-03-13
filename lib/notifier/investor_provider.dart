@@ -14,6 +14,7 @@ class InvestorProvider extends ChangeNotifier {
   String? _videoLink;
   String? _location;
   String? _pic;
+  String? _id;
 
   String? get name => _name;
 
@@ -26,6 +27,8 @@ class InvestorProvider extends ChangeNotifier {
   String? get location => _location;
 
   String? get pic => _pic;
+
+  String? get id => _id;
 
   set changePic(String value) {
     _pic = value;
@@ -58,7 +61,8 @@ class InvestorProvider extends ChangeNotifier {
         personalLink: _personalLink ?? '',
         videoLink: _videoLink ?? '',
         location: _location ?? '',
-        pic: _pic ?? '');
+        pic: _pic ?? '',
+        id: _id ?? '');
     databaseService.saveInvestorUserDataToFirestore(newInvestorProfile);
   }
 }
