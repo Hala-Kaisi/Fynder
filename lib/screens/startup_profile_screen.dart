@@ -8,7 +8,6 @@ import 'package:fynder/shared/menu_bottom.dart';
 import 'package:fynder/shared/menu_drawer.dart';
 
 import '../models/startup.dart';
-import '../notifier/startup_provider.dart';
 
 class StartupProfileScreen extends StatefulWidget {
   final User user;
@@ -21,8 +20,6 @@ class StartupProfileScreen extends StatefulWidget {
 
 class _StartupProfileScreenState extends State<StartupProfileScreen> {
   late User _currentUser;
-
-  late String? name;
   late String? ideaSummary;
   late String? personalWebsiteLink;
   late String? videoLink;
@@ -30,7 +27,6 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
   late String? marketSegment;
   late String? investmentType;
   late String? location;
-  late String? picture;
 
   String locationValue = 'EU Zone';
 
@@ -49,14 +45,12 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
     super.initState();
   }
 
-  final TextEditingController txtName = TextEditingController();
   final TextEditingController txtIdeaSummary = TextEditingController();
   final TextEditingController txtPersonalWebsiteLink = TextEditingController();
   final TextEditingController txtVideoLink = TextEditingController();
   final TextEditingController txtTargetFunds = TextEditingController();
   final TextEditingController txtMarketSegment = TextEditingController();
   final TextEditingController txtInvestmentType = TextEditingController();
-  final TextEditingController txtPicture = TextEditingController();
 
   final double fontSize = 18;
 
@@ -75,7 +69,6 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
               stream: getUserData(),
               builder: (context, snapshot) {
                 Startup? startup = snapshot.data;
-                name = startup?.name;
                 ideaSummary = startup?.ideaSummary;
                 personalWebsiteLink = startup?.personalLink;
                 videoLink = startup?.videoLink;
@@ -83,20 +76,8 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                 marketSegment = startup?.marketSegment;
                 investmentType = startup?.investmentType;
                 location = startup?.location;
-                picture = startup?.pic;
                 return Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Text('$name'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: TextField(
-                        controller: txtName,
-                        decoration: InputDecoration(hintText: 'Full Name'),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(24.0),
                       child: Text('$ideaSummary'),
@@ -203,17 +184,6 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Text('$picture'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: TextField(
-                        controller: txtPicture,
-                        decoration: InputDecoration(hintText: 'Picture'),
-                      ),
-                    ),
                     ElevatedButton(
                       child: Text(
                         'Save',
@@ -221,51 +191,7 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                           fontSize: fontSize,
                         ),
                       ),
-                      onPressed: () {
-                        if (txtName.text != '') {
-                          name = txtName.text;
-                        }
-                        if (txtIdeaSummary.text != '') {
-                          ideaSummary = txtIdeaSummary.text;
-                        }
-                        if (txtPersonalWebsiteLink.text != '') {
-                          personalWebsiteLink = txtPersonalWebsiteLink.text;
-                        }
-                        if (txtVideoLink.text != '') {
-                          videoLink = txtVideoLink.text;
-                        }
-                        if (txtInvestmentType.text != '') {
-                          investmentType = txtInvestmentType.text;
-                        }
-                        if (txtMarketSegment.text != '') {
-                          marketSegment = txtMarketSegment.text;
-                        }
-                        if (txtTargetFunds.text != '') {
-                          targetFunds = txtTargetFunds.text;
-                        }
-                        if (txtPicture.text != '') {
-                          picture = txtPicture.text;
-                        }
-                        if (locationValue != '') {
-                          location = locationValue;
-                        }
-
-                        StartupProvider startupProvider = StartupProvider(uid: _currentUser.uid);
-                        startupProvider.changeName = name;
-                        startupProvider.changeIdeaSummary = ideaSummary;
-                        startupProvider.changePersonalLink =
-                            personalWebsiteLink;
-                        startupProvider.changeInvestmentType = investmentType;
-                        startupProvider.changeMarketSegment = marketSegment;
-                        startupProvider.changeTargetFunds = targetFunds;
-                        startupProvider.changeVideoLink = videoLink;
-                        startupProvider.changeLocation = locationValue;
-                        startupProvider.changePic = picture;
-                        startupProvider.changeUid = _currentUser.uid;
-                        startupProvider.updateStartupProfile();
-
-                        displayUpdatedUserData(snapshot);
-                      },
+                      onPressed: () {},
                     ),
                   ],
                 );
@@ -273,21 +199,6 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
         ),
       ),
     );
-  }
-
-  void displayUpdatedUserData(AsyncSnapshot<Startup?> snapshot) {
-    setState(() {
-      Startup? startup = snapshot.data;
-      name = startup?.name;
-      ideaSummary = startup?.ideaSummary;
-      personalWebsiteLink = startup?.personalLink;
-      videoLink = startup?.videoLink;
-      targetFunds = startup?.targetFunds;
-      marketSegment = startup?.marketSegment;
-      investmentType = startup?.investmentType;
-      location = startup?.location;
-      picture = startup?.pic;
-    });
   }
 
   Stream<Startup?> getUserData() {

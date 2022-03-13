@@ -8,8 +8,6 @@ import 'package:fynder/shared/actions_menu.dart';
 import 'package:fynder/shared/menu_bottom.dart';
 import 'package:fynder/shared/menu_drawer.dart';
 
-import '../notifier/investor_provider.dart';
-
 class InvestorProfileScreen extends StatefulWidget {
   final User user;
 
@@ -21,13 +19,10 @@ class InvestorProfileScreen extends StatefulWidget {
 
 class _InvestorProfileScreenState extends State<InvestorProfileScreen> {
   late User _currentUser;
-
-  late String? name;
   late String? description;
   late String? personalWebsiteLink;
   late String? videoLink;
   late String? location;
-  late String? picture;
 
   String locationValue = 'EU Zone';
 
@@ -46,11 +41,9 @@ class _InvestorProfileScreenState extends State<InvestorProfileScreen> {
     super.initState();
   }
 
-  final TextEditingController txtName = TextEditingController();
   final TextEditingController txtDescription = TextEditingController();
   final TextEditingController txtPersonalWebsiteLink = TextEditingController();
   final TextEditingController txtVideoLink = TextEditingController();
-  final TextEditingController txtPicture = TextEditingController();
 
   final double fontSize = 18;
 
@@ -69,25 +62,12 @@ class _InvestorProfileScreenState extends State<InvestorProfileScreen> {
               stream: getUserData(),
               builder: (context, snapshot) {
                 Investor? investor = snapshot.data;
-                name = investor?.name;
                 description = investor?.description;
                 personalWebsiteLink = investor?.personalLink;
                 videoLink = investor?.videoLink;
                 location = investor?.location;
-                picture = investor?.pic;
                 return Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Text('$name'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: TextField(
-                        controller: txtName,
-                        decoration: InputDecoration(hintText: 'Full Name'),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(24.0),
                       child: Text('$description'),
@@ -96,8 +76,7 @@ class _InvestorProfileScreenState extends State<InvestorProfileScreen> {
                       padding: const EdgeInsets.all(24.0),
                       child: TextField(
                         controller: txtDescription,
-                        decoration:
-                            InputDecoration(hintText: 'Short Description'),
+                        decoration: InputDecoration(hintText: 'Idea Summary'),
                       ),
                     ),
                     Padding(
@@ -160,17 +139,6 @@ class _InvestorProfileScreenState extends State<InvestorProfileScreen> {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Text('$picture'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: TextField(
-                        controller: txtPicture,
-                        decoration: InputDecoration(hintText: 'Picture'),
-                      ),
-                    ),
                     ElevatedButton(
                       child: Text(
                         'Save',
@@ -178,39 +146,7 @@ class _InvestorProfileScreenState extends State<InvestorProfileScreen> {
                           fontSize: fontSize,
                         ),
                       ),
-                      onPressed: () {
-                        if (txtName.text != '') {
-                          name = txtName.text;
-                        }
-                        if (txtDescription.text != '') {
-                          description = txtDescription.text;
-                        }
-                        if (txtPersonalWebsiteLink.text != '') {
-                          personalWebsiteLink = txtPersonalWebsiteLink.text;
-                        }
-                        if (txtVideoLink.text != '') {
-                          videoLink = txtVideoLink.text;
-                        }
-                        if (locationValue != '') {
-                          location = locationValue;
-                        }
-                        if (txtPicture.text != '') {
-                          picture = txtPicture.text;
-                        }
-                        InvestorProvider investorProfile =
-                            InvestorProvider(uid: _currentUser.uid);
-                        investorProfile.changeName = name;
-                        investorProfile.changeDescription = description;
-                        investorProfile.changePersonalLink =
-                            personalWebsiteLink;
-                        investorProfile.changeVideoLink = videoLink;
-                        investorProfile.changeLocation = locationValue;
-                        investorProfile.changePic = picture;
-                        investorProfile.changeUid = _currentUser.uid;
-                        investorProfile.updateInvestorProfile();
-
-                        displayUpdatedUserData(snapshot);
-                      },
+                      onPressed: () {},
                     ),
                   ],
                 );
@@ -218,18 +154,6 @@ class _InvestorProfileScreenState extends State<InvestorProfileScreen> {
         ),
       ),
     );
-  }
-
-  void displayUpdatedUserData(AsyncSnapshot<Investor?> snapshot) {
-    setState(() {
-      Investor? investor = snapshot.data;
-      name = investor?.name;
-      description = investor?.description;
-      personalWebsiteLink = investor?.personalLink;
-      videoLink = investor?.videoLink;
-      location = investor?.location;
-      picture = investor?.pic;
-    });
   }
 
   Stream<Investor?> getUserData() {

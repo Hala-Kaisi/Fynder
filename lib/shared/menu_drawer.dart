@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:fynder/screens/investor_profile_screen.dart';
 import 'package:fynder/screens/startup_profile_screen.dart';
 
-import '../screens/home_page.dart';
-
 class MenuDrawer extends StatefulWidget {
   final User user;
 
@@ -28,35 +26,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              children: buildMenuItems(context),
-            ),
-          ),
-          Spacer(),
-          Divider(),
-           Container(
-             child: Align(
-               alignment: FractionalOffset.bottomCenter,
-               child: Container(
-                 child: Column(
-                   children: [
-                     Divider(),
-                     ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) => HomePage()));
-                        },
-                        child: Text("Sign Out"),
-                      ),
-                   ],
-                 ),
-               ),
-             ),
-           ),
-        ],
+      child: ListView(
+        children: buildMenuItems(context),
       ),
     );
   }
