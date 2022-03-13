@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fynder/screens/choose_account_type.dart';
 import 'package:fynder/screens/reset_password.dart';
 import 'package:fynder/screens/swipe_screen.dart';
 import 'package:fynder/services/fire_auth.dart';
@@ -99,8 +100,7 @@ class _LogInState extends State<LogIn> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => ResetScreen())
-                        );
+                            builder: (context) => ResetScreen()));
                       },
                       child: const Text(
                         'Forgot Password',
@@ -166,7 +166,12 @@ class _LogInState extends State<LogIn> {
                                       'Sign Up',
                                       style: TextStyle(fontSize: 20),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChooseAccount()));
+                                    },
                                   )
                                 ],
                                 mainAxisAlignment: MainAxisAlignment.center,
