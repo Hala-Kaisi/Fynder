@@ -33,6 +33,8 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
   late String? picture;
 
   String locationValue = 'EU Zone';
+  String segmentValue = 'IT';
+  String investmentValue = "Crowd";
 
   var locationList = [
     "EU Zone",
@@ -41,6 +43,21 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
     "USA",
     "North Africa",
     "Canada"
+  ];
+
+  var marketSegmentList = [
+    "IT",
+    "Health",
+    "Education",
+    "Tourism",
+    "Military",
+    "Science"
+  ];
+
+  var investmentTypeList = [
+    "Crowd",
+    "Direct",
+    "Crypto"
   ];
 
   @override
@@ -149,9 +166,35 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(24.0),
-                      child: TextField(
-                        controller: txtMarketSegment,
-                        decoration: InputDecoration(hintText: 'Market Segment'),
+                      child: FormField<String>(
+                        builder: (FormFieldState<String> state) {
+                          return InputDecorator(
+                            decoration: InputDecoration(
+                                errorStyle: TextStyle(
+                                    color: Colors.redAccent, fontSize: 16.0),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0))),
+                            isEmpty: segmentValue == '',
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: segmentValue,
+                                isDense: true,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    segmentValue = newValue!;
+                                    state.didChange(newValue);
+                                  });
+                                },
+                                items: marketSegmentList.map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                     Padding(
@@ -160,10 +203,35 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(24.0),
-                      child: TextField(
-                        controller: txtInvestmentType,
-                        decoration:
-                            InputDecoration(hintText: 'Investment Type'),
+                      child: FormField<String>(
+                        builder: (FormFieldState<String> state) {
+                          return InputDecorator(
+                            decoration: InputDecoration(
+                                errorStyle: TextStyle(
+                                    color: Colors.redAccent, fontSize: 16.0),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0))),
+                            isEmpty: investmentValue == '',
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: investmentValue,
+                                isDense: true,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    investmentValue = newValue!;
+                                    state.didChange(newValue);
+                                  });
+                                },
+                                items: investmentTypeList.map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                     Padding(
@@ -234,11 +302,11 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                         if (txtVideoLink.text != '') {
                           videoLink = txtVideoLink.text;
                         }
-                        if (txtInvestmentType.text != '') {
-                          investmentType = txtInvestmentType.text;
+                        if (investmentValue != '') {
+                          investmentType = investmentValue;
                         }
-                        if (txtMarketSegment.text != '') {
-                          marketSegment = txtMarketSegment.text;
+                        if (segmentValue != '') {
+                          marketSegment = segmentValue;
                         }
                         if (txtTargetFunds.text != '') {
                           targetFunds = txtTargetFunds.text;
@@ -250,7 +318,8 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                           location = locationValue;
                         }
 
-                        StartupProvider startupProvider = StartupProvider(uid: _currentUser.uid);
+                        StartupProvider startupProvider =
+                            StartupProvider(uid: _currentUser.uid);
                         startupProvider.changeName = name;
                         startupProvider.changeIdeaSummary = ideaSummary;
                         startupProvider.changePersonalLink =
@@ -259,7 +328,7 @@ class _StartupProfileScreenState extends State<StartupProfileScreen> {
                         startupProvider.changeMarketSegment = marketSegment;
                         startupProvider.changeTargetFunds = targetFunds;
                         startupProvider.changeVideoLink = videoLink;
-                        startupProvider.changeLocation = locationValue;
+                        startupProvider.changeLocation = location;
                         startupProvider.changePic = picture;
                         startupProvider.changeUid = _currentUser.uid;
                         startupProvider.updateStartupProfile();

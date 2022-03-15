@@ -27,6 +27,7 @@ class _StartupSignUpState extends State<StartupSignUp> {
   final TextEditingController txtMarketSegment = TextEditingController();
   final TextEditingController txtInvestmentType = TextEditingController();
   String locationValue = 'EU Zone';
+  String segmentValue = 'IT';
 
   var locationList = [
     "EU Zone",
@@ -37,6 +38,14 @@ class _StartupSignUpState extends State<StartupSignUp> {
     "Canada"
   ];
 
+  var marketSegmentList = [
+    "IT",
+    "Health",
+    "Education",
+    "Tourism",
+    "Military",
+    "Science"
+  ];
   final double fontSize = 18;
 
   @override
@@ -106,9 +115,35 @@ class _StartupSignUpState extends State<StartupSignUp> {
               ),
               Padding(
                 padding: const EdgeInsets.all(24.0),
-                child: TextField(
-                  controller: txtMarketSegment,
-                  decoration: InputDecoration(hintText: 'Market Segment'),
+                child: FormField<String>(
+                  builder: (FormFieldState<String> state) {
+                    return InputDecorator(
+                      decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              color: Colors.redAccent, fontSize: 16.0),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0))),
+                      isEmpty: segmentValue == '',
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: segmentValue,
+                          isDense: true,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              segmentValue = newValue!;
+                              state.didChange(newValue);
+                            });
+                          },
+                          items: marketSegmentList.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
               Padding(
@@ -172,7 +207,7 @@ class _StartupSignUpState extends State<StartupSignUp> {
                 ),
               ),
               SizedBox(
-                  height: 20,
+                height: 20,
               ),
               MaterialButton(
                 minWidth: 360,
@@ -184,7 +219,7 @@ class _StartupSignUpState extends State<StartupSignUp> {
                       personalLink: txtPersonalWebsiteLink.text,
                       videoLink: txtVideoLink.text,
                       targetFunds: txtTargetFunds.text,
-                      marketSegment: txtMarketSegment.text,
+                      marketSegment: segmentValue,
                       investmentType: txtInvestmentType.text,
                       location: locationValue,
                       pic: 'startupPic-$startupUID',
@@ -209,23 +244,12 @@ class _StartupSignUpState extends State<StartupSignUp> {
                 ),
               ),
               SizedBox(
-                  height: 20,
+                height: 20,
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  List<DropdownMenuItem<String>> get dropdownItems {
-    List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("EU Zone"), value: "EU"),
-      DropdownMenuItem(child: Text("Middle East"), value: "ME"),
-      DropdownMenuItem(child: Text("North Africa"), value: "NA"),
-      DropdownMenuItem(child: Text("USA"), value: "USA"),
-      DropdownMenuItem(child: Text("Canada"), value: "CA"),
-    ];
-    return menuItems;
   }
 }
