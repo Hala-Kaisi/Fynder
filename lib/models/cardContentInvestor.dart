@@ -101,12 +101,12 @@ class _CardContent extends State<cardContentInvestor> {
         child:ListView(
           shrinkWrap: true,
         children: [
-          Image(
+          /*Image(
             image: NetworkImage('http://$_asset'),
             width: 380,
             height: 100,
             fit: BoxFit.fitWidth,
-          ),
+          ),*/
           titleSection,
           SizedBox(height: 5),
           infoSection,

@@ -123,11 +123,11 @@ class _CardContent extends State<cardContentStartup> {
           child:ListView(
             shrinkWrap: true,
             children: [
-              SizedBox(
+              /*SizedBox(
                 child: Image.network('$_asset'),
                 width: 380,
                 height: 100,
-              ),
+              ),*/
               titleSection,
               SizedBox(height: 5),
               infoSection,

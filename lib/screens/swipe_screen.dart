@@ -86,12 +86,11 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
             if(_currentUser.displayName != "startup"){
               isStartup = false;
               getStartupsCards(storage, documents);
-              return createStack();
             }
             else {
               getInvestorCards(storage, documents);
-              return createStack();
             }
+            return createStack();
             }
         }
       );
@@ -100,57 +99,60 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
   Widget createStack() {
     var size = MediaQuery.of(context).size;
     var currentIndex = 0;
-    if(isStartup){
-    return Padding(
+    if(isStartup) {
+      return Padding(
         padding: const EdgeInsets.only(top: 0),
         child: Container(
           height: 700,
-            child: TinderSwapCard(
-              cardController: controller = CardController(),
-              swipeUpdateCallback: (DragUpdateDetails details, Alignment align) {
-                if (align.x < 0) {
-                } else if (align.x > 0) {
-                  investorSwipedRight(investorsCards[currentIndex]);
-                }
-                // print(itemsTemp.length);
-              },
-              swipeCompleteCallback: (CardSwipeOrientation orientation, int index) {
-                currentIndex = index;
-              },
-              swipeDown: false,
-              swipeUp: false,
-              totalNum: investorsCards.length,
-              maxWidth: MediaQuery.of(context).size.width,
-              maxHeight: 700,
-              minWidth: MediaQuery.of(context).size.width * 0.75,
-              minHeight: 500,
-              cardBuilder: (context, index) =>
-                  Container(
-                    decoration: BoxDecoration(
+          child: TinderSwapCard(
+            cardController: controller = CardController(),
+            swipeUpdateCallback: (DragUpdateDetails details, Alignment align) {
+              if (align.x < 0) {} else if (align.x > 0) {
+                investorSwipedRight(investorsCards[currentIndex]);
+              }
+              // print(itemsTemp.length);
+            },
+            swipeCompleteCallback: (CardSwipeOrientation orientation,
+                int index) {
+              currentIndex = index;
+            },
+            swipeDown: false,
+            swipeUp: false,
+            totalNum: investorsCards.length,
+            maxWidth: MediaQuery
+                .of(context)
+                .size
+                .width,
+            maxHeight: 700,
+            minWidth: MediaQuery
+                .of(context)
+                .size
+                .width * 0.75,
+            minHeight: 500,
+            cardBuilder: (context, index) =>
+                Container(
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        blurRadius: 5,
-                        spreadRadius: 2),
-                    ]),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Stack(
-                        children: [
-                          Container(
-                          width: size.width,
-                          height:600,
-                          child: investorsCards[index],
-                        ),
-                      ],
-                    ),
+                            color: Colors.grey.withOpacity(0.3),
+                            blurRadius: 5,
+                            spreadRadius: 2),
+                      ]),
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: size.width,
+                        height: 600,
+                        child: investorsCards[index],
+                      ),
+                    ],
                   ),
+                ),
           ),
         ),
-      ),
-    );
-  }
+      );
+    }
     else {
       return Padding(
         padding: const EdgeInsets.only(top: 5),
@@ -192,29 +194,26 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
                           spreadRadius: 2),
                     ],
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: size.width,
-                          height: 600,
-                          child: startupsCards[index],
-                        ),
-                      ],
-                    ),
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: size.width,
+                        height: 600,
+                        child: startupsCards[index],
+                      ),
+                    ],
+                  ),
                   ),
                 ),
           ),
-        ),
-      );
+        );
     }
   }
 
   getInvestorCards(Storage storage, List<DocumentSnapshot> documents){
     for(int i = 0; i<documents.length; i++){
       DocumentSnapshot doc = documents[i];
-      if (doc['startup'] == false && database.isSwipedRight(doc.id, _currentUser.uid) == false) {
+      if (doc['startup'] == false /*&&database.isSwipedRight(doc.id, _currentUser.uid) == false*/) {
         investorsCards.add(
             cardContentInvestor(
                 name: doc['name'],
@@ -233,8 +232,8 @@ class _SwipeScreenState extends State<SwipeScreen> with TickerProviderStateMixin
   getStartupsCards(Storage storage, List<DocumentSnapshot> documents) {
     for (int i = 0; i < documents.length; i++) {
       DocumentSnapshot doc = documents[i];
-      if (doc['startup'] == true &&
-          database.isSwipedRight(doc.id, _currentUser.uid) == false) {
+      if (doc['startup'] == true /*&&
+          database.isSwipedRight(doc.id, _currentUser.uid) == false*/) {
         startupsCards.add(cardContentStartup(
             name: doc['name'],
             asset: storage.getURL(doc['picture']),
