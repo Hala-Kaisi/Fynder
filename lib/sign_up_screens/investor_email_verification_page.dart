@@ -101,7 +101,7 @@ class _InvestorEmailVerificationState extends State<InvestorEmailVerification> {
               minWidth: 360,
               height: 60,
               onPressed: () {
-                if (_currentUser.emailVerified == false) {
+                if (_currentUser.emailVerified == true) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
