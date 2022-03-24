@@ -19,7 +19,7 @@ Flutter, Dart
 
 ### Firebase
 
- <img  width="378" height="332" src="github_images/Firebase_Storage.png"> 
+ ![Firebase Storage](github_images/Firebase_Storage.png?raw=True)
 
 #### Requirements
 * Basic knowledge about Flutter
