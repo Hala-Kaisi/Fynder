@@ -5,6 +5,8 @@ Fynder is a mobile app with a main goal of connecting start-ups with potential i
 # Project Description
 Fynder is a mobile application for gathering start-ups and investors with swiping function in its core.
 
+
+
 ### Technologies & Architecture
 Flutter, Dart
 
@@ -44,3 +46,7 @@ A few resources to get you started with the project:
 For help getting started with Flutter, view Flutter's
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+### Individual Contribution
+
+* Accesible from the details of every dart file in lib/ folder.
