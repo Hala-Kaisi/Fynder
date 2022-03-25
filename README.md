@@ -37,7 +37,7 @@ Flutter, Dart
 
 
 
-A few resources to get you started if the the project:
+A few resources to get you started with the project:
 
 - [Install Flutter](https://docs.flutter.dev/get-started/install)
 
